@@ -1,0 +1,680 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SG Haze Monitor</title><style>:root{font-family:system-ui,-apple-system,sans-serif;color:#eaf2ff;background:#0b1526}*{box-sizing:border-box}body{margin:0}main{max-width:1040px;margin:auto;padding:24px 18px 60px}header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.brand{font-size:24px;font-weight:800}.tag{color:#8aa6c5}button{border:0;border-radius:12px;background:#37c7a3;color:#08211c;font-weight:700;padding:11px 16px;cursor:pointer}.hero{margin:25px 0;background:linear-gradient(120deg,#183a51,#12332e);border:1px solid #315b67;border-radius:22px;padding:26px}h1{font-size:clamp(28px,5vw,43px);margin:0 0 10px}h2{font-size:21px}.muted{color:#a8bfd4}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:13px}.card{border:1px solid #2b4059;background:#142238;border-radius:17px;padding:18px}.value{font-size:38px;font-weight:800;margin:8px 0}.pill{display:inline-block;border-radius:30px;padding:5px 11px;background:#293c54;font-size:13px}.good{color:#58e5ad}.moderate{color:#f7d26b}.unhealthy{color:#ff9779}.very{color:#f579ab}.hazard{color:#dca8ff}.error{color:#ffb5a4}.advisory{border-left:5px solid #f7d26b;margin:18px 0}.chart{width:100%;height:185px;display:block}.chartbox{overflow:hidden}.chartbox .charthead h3{margin:5px 0;font-size:18px}.charttooltip{min-height:35px;font-size:13px;color:#d5e7f7;padding:7px 0}.chartdot{pointer-events:none}.chart-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0}.rangebtn{padding:7px 12px;background:#203a51;color:#d7edff;border:1px solid #46617b}.rangebtn[aria-pressed=true]{background:#37c7a3;color:#08211c}.chartbox{margin:14px 0}.chartlabel{font-size:13px;color:#a8bfd4}select{background:#1c344c;color:#eaf2ff;border:1px solid #45617b;border-radius:10px;padding:9px}.charthead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.trendnote{font-size:13px;color:#a8bfd4}.card{min-width:0}.reading-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.reading-grid .card{border-top:5px solid #f7d26b}.reading-grid .card:has(.unhealthy){border-top-color:#ff9779}.reading-grid .card:has(.very){border-top-color:#f579ab}.reading-grid .card:has(.hazard){border-top-color:#dca8ff}.reading-grid .card:has(.good){border-top-color:#58e5ad}@media(max-width:520px){main{padding:18px 14px 40px}.hero{padding:19px}.reading-grid{gap:10px}.reading-grid .card{padding:14px}.reading-grid .value{font-size:36px}}nav{display:flex;gap:10px;margin:22px 0;flex-wrap:wrap}nav a{color:#b8e9ff;text-decoration:none;border:1px solid #36526b;padding:9px 13px;border-radius:12px}.legend{display:flex;flex-wrap:wrap;gap:10px}.legend span{font-size:13px;border-radius:8px;padding:9px;background:#1c2e44}footer{margin-top:35px;font-size:13px;color:#9ab0c7}a{color:#8bdde5}#updated{font-size:13px}.summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}.summary .value{font-size:30px}.summary .card{padding:15px}.summary label{display:block;margin-bottom:8px}.summary select{width:100%}.stale{color:#ffb5a4}.tools{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0}.tools button{background:#203a51;color:#eaf2ff;border:1px solid #46617b}@media(max-width:390px){.summary{grid-template-columns:1fr}}.region-map{position:relative;max-width:530px;margin:12px auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:". north ." "west central east" ". south .";gap:10px}.map-region{min-width:0;min-height:96px;padding:12px 5px;border:2px solid #36526b;border-radius:18px;background:#20344b;color:#eaf2ff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.map-region strong{font-size:25px}.map-region small{font-size:12px}.map-region[aria-pressed=true]{outline:3px solid #b8e9ff;outline-offset:2px}.map-region.good{border-color:#58e5ad}.map-region.moderate{border-color:#f7d26b}.map-region.unhealthy{border-color:#ff9779}.map-region.very{border-color:#f579ab}.map-region.hazard{border-color:#dca8ff}.guidance{border-left:5px solid #58e5ad}.guidance.moderate{border-left-color:#f7d26b}.guidance.unhealthy{border-left-color:#ff9779}.guidance.very{border-left-color:#f579ab}.guidance.hazard{border-left-color:#dca8ff}@media(max-width:390px){.map-region{min-height:83px}.map-region strong{font-size:22px}} .geo-panel{margin:14px 0;padding:10px;border:1px solid #36526b;border-radius:18px;background:#10243a}.geo-panel svg{display:block;width:100%;height:auto;max-height:310px}.geo-point{cursor:pointer;outline:none}.geo-point circle{stroke:#fff;stroke-width:2}.geo-point:focus circle{stroke:#fff;stroke-width:5}.geo-point text{fill:#091827;font-size:16px;font-weight:800;text-anchor:middle;pointer-events:none}.geo-point .place{fill:#eaf2ff;font-size:12px;font-weight:600}.geo-point[aria-pressed=true] circle{stroke:#fff;stroke-width:5}.map-caption{font-size:13px;color:#a8bfd4;margin:8px}.map-land{fill:#31516a;stroke:#6e9ab2;stroke-width:2}.map-v10{background:linear-gradient(150deg,#152b40,#0e2032);border:1px solid #34536b;border-radius:20px;padding:15px;margin:18px 0;overflow:hidden}.map-v10 svg{width:100%;height:auto;display:block;overflow:visible;min-height:220px}.map-v10{box-shadow:inset 0 1px 0 #42677b,0 12px 30px #0002}.map-v10 .map-land{filter:drop-shadow(0 8px 10px #0006)}.map-v10 .geo-point circle{transition:stroke-width .15s,fill .15s}.map-v10 .geo-point:focus-visible circle{stroke:#fff;stroke-width:6}.map-v10 .geo-point[aria-pressed=true] circle{filter:drop-shadow(0 0 7px #a7e9ff)}.map-topline{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:11px;letter-spacing:1px;font-weight:800;color:#a8bfd4}.map-live{color:#58e5ad;letter-spacing:0}.map-live.is-saved{color:#f7d26b}.map-live.is-unavailable{color:#ffb5a4}.map-v10 .geo-point{cursor:pointer;outline:none}.map-v10 .geo-point:focus rect{stroke-width:5}.map-v10 .geo-point text{text-anchor:middle;pointer-events:none}.map-v10 .geo-point .place{fill:#c4d7e8;font-size:13px;font-weight:600}.map-v10 .geo-point .geo-value{font-size:23px;font-weight:800;fill:#f7d26b}.map-detail{border:1px solid #34536b;background:#14253a;border-radius:18px;padding:22px;margin-bottom:25px}.detail-heading{display:flex;justify-content:space-between;align-items:center}.detail-heading h3{font-size:24px;margin:6px 0}.detail-kicker{font-size:11px;letter-spacing:1px;color:#9db6cc}.detail-number{font-size:29px;font-weight:800;color:#f7d26b}.map-caption{font-size:12px;color:#a8bfd4;margin:0 4px 3px}@media(max-width:420px){.map-v10{padding:9px}.map-topline{font-size:9px}}/* Version 23: compact mobile-first map and clearer region controls */
+.map-v10{padding:14px 16px 12px;margin:14px 0 18px}
+.map-v10 svg{min-height:0;max-height:none;aspect-ratio:560/235}
+.map-v10 .map-topline{margin-bottom:2px}
+.map-v10 .map-caption{line-height:1.4;margin:4px 3px 2px}
+.map-v10 .geo-point{touch-action:manipulation}
+.map-v10 .geo-point:focus-visible{outline:none}
+.map-v10 .geo-point:focus-visible circle{stroke:#a8f5ff;stroke-width:5}
+@media(max-width:600px){
+main{padding-left:14px;padding-right:14px}
+#map>p.muted{margin:8px 0 12px;line-height:1.4}
+.map-v10{padding:12px 11px;margin:12px 0 16px;border-radius:19px}
+.map-v10 svg{width:100%;aspect-ratio:560/230}
+.map-v10 .map-caption{font-size:12px}
+.map-detail{margin-top:14px}
+}
+.map-updated{font-size:12px;color:#b9d4e2;margin:7px 2px 0}.map-legend{display:flex;flex-wrap:wrap;gap:8px 12px;margin:0 3px 10px;font-size:11px;color:#c4d7e8}.map-legend span{display:inline-flex;align-items:center;gap:5px}.map-legend i{width:9px;height:9px;display:inline-block;border-radius:50%}.map-detail{padding:16px 18px;margin-bottom:19px}.map-detail #guidanceText{line-height:1.5}.map-v10 .geo-point[aria-pressed=true] circle{stroke:#e9faff;stroke-width:5}@media(max-width:600px){.map-v10 svg{aspect-ratio:560/225}.map-detail{padding:16px}.map-legend{gap:6px 10px}}.map-v10{background:radial-gradient(ellipse at 50% 35%,#1a4156 0%,#112b40 62%,#0d2134 100%);padding:18px;border-color:#466b80}.map-v10 svg{min-height:230px}.map-v10 .geo-point circle{stroke-width:3;filter:drop-shadow(0 3px 5px #00101b)}.map-v10 .geo-point[aria-pressed=true] circle{stroke-width:5;filter:drop-shadow(0 0 9px #b6f3ff)}.map-v10 .geo-point .place{font-size:13px}.map-v10 .geo-point .geo-value{font-size:24px}.map-updated{font-size:12px;color:#b5cadc;margin:9px 0 0}.map-caption{line-height:1.5;margin-top:14px}.map-legend{margin-top:4px;gap:9px 13px}.map-legend i{width:11px;height:11px}.map-detail{border-left:4px solid #58e5ad}.map-detail.moderate{border-left-color:#f7d26b}.map-detail.unhealthy{border-left-color:#ff9779}.map-detail.very{border-left-color:#f579ab}.map-detail.hazard{border-left-color:#dca8ff}.map-detail #guidanceText{color:#eaf2ff;font-size:clamp(15px,2.5vw,18px)}@media(max-width:600px){.map-v10{padding:12px}.map-v10 svg{min-height:205px}.map-topline{font-size:10px}.map-detail .detail-heading{gap:10px}.detail-number{font-size:26px}.map-caption{font-size:12px}}@media(prefers-reduced-motion:reduce){.map-v10 .geo-point circle{transition:none}}/* v26 Android map and data-status polish */.map-v10 svg{min-height:0!important;aspect-ratio:540/225;max-height:260px}.map-v10{padding:12px}.map-v10 .map-caption{margin-top:6px}.map-v10 .geo-point{touch-action:manipulation}.map-v10 .geo-point:focus-visible circle{stroke:#a8f5ff;stroke-width:6}#freshness{font-size:13px;line-height:1.5;margin:8px 0 0}#refresh:disabled{opacity:.6;cursor:wait}@media(max-width:600px){.map-v10 svg{aspect-ratio:540/225;max-height:225px}.map-v10{padding:10px}.map-detail{padding:14px}.map-v10 .map-caption{font-size:12px;line-height:1.4}} /* Version 43: Straits Times-inspired NEA PSI category palette */
+:root{--psi-good:#25b95c;--psi-unhealthy:#ffcc08;--psi-very:#ff941b;--psi-hazard:#ee1735}
+.good,.moderate{color:var(--psi-good)}.unhealthy{color:var(--psi-unhealthy)}.very{color:var(--psi-very)}.hazard{color:var(--psi-hazard)}
+.region-picker button{font-weight:850!important;border-width:2px!important}
+.region-picker button[data-psi-band="good"],.region-picker button[data-psi-band="moderate"]{background:#16653c;color:#fff;border-color:var(--psi-good)}
+.region-picker button[data-psi-band="unhealthy"]{background:#755d0a;color:#fff;border-color:var(--psi-unhealthy)}
+.region-picker button[data-psi-band="very"]{background:#783e10;color:#fff;border-color:var(--psi-very)}
+.region-picker button[data-psi-band="hazard"]{background:#791c30;color:#fff;border-color:var(--psi-hazard)}
+.region-picker button[aria-pressed="true"]{outline:3px solid #fff;outline-offset:2px}
+.map-v10 .geo-point .geo-value{fill:currentColor}.map-detail.good,.map-detail.moderate{border-left-color:var(--psi-good)}.map-detail.unhealthy{border-left-color:var(--psi-unhealthy)}.map-detail.very{border-left-color:var(--psi-very)}.map-detail.hazard{border-left-color:var(--psi-hazard)}
+#selectedRegionPsi,#focusPsi{font-weight:900}
+.map-legend i{width:12px;height:12px}
+
+/* Compact, accessible mobile-first air quality snapshot */
+.quick-readings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.quick-reading{border:1px solid #47677c;background:#102b3b;border-radius:16px;padding:14px;min-width:0}.quick-reading .quick-label{font-size:13px;color:#d3e5f0}.quick-reading .quick-number{font-size:clamp(30px,6vw,46px);font-weight:850;line-height:1.2;margin:7px 0}.quick-reading .quick-band{font-size:13px;font-weight:700}.quick-reading .quick-source{font-size:11px;color:#b9d4e2;margin-top:7px}.quick-reading[data-band=good]{border-top:5px solid #25b95c}.quick-reading[data-band=unhealthy]{border-top:5px solid #ffcc08}.quick-reading[data-band=very]{border-top:5px solid #ff941b}.quick-reading[data-band=hazard]{border-top:5px solid #ee1735}.quick-reading[data-band=unknown]{border-top:5px solid #7892a8}.quick-note{font-size:12px;color:#c1d5e3;line-height:1.4}.hero .quick-details summary{cursor:pointer;color:#b8e9ff;font-size:13px}.hero .quick-details p{font-size:13px;line-height:1.5}.quick-reading .quick-number{overflow-wrap:anywhere}@media(max-width:600px){.hero{margin:12px 0;padding:14px}.hero h1{font-size:25px;margin:7px 0}.hero>.pill{font-size:11px}.hero #updated,.hero #freshness,.hero #v28-check,.hero #v27-status{font-size:11px;line-height:1.35;margin:5px 0}.hero #status{font-size:13px}.quick-readings{gap:9px;margin:10px 0}.quick-reading{padding:10px}.quick-reading .quick-number{font-size:32px}#map>h2{margin:12px 0 5px}#map>p.muted{margin:4px 0 8px;font-size:13px}header{gap:7px}header #refresh{padding:8px 12px;font-size:13px}}
+
+/* Keep the latest readings visible; tuck secondary diagnostics into accessible details. */
+.hero .data-details{margin-top:9px;border-top:1px solid #466779;padding-top:9px}.hero .data-details summary{cursor:pointer;color:#b8e9ff;font-size:13px;font-weight:650;min-height:28px}.hero .data-details summary:focus-visible{outline:2px solid #b8e9ff;outline-offset:3px}.hero .data-details-body{padding:5px 0 0}.hero .data-details-body p{margin:6px 0;font-size:12px;line-height:1.5}.hero #status{margin-top:8px}.hero .quick-details{margin-top:5px}@media(max-width:600px){.hero .quick-note{margin:9px 0 6px}.hero .data-details{margin-top:7px;padding-top:7px}.hero .data-details-body p{margin:5px 0}}
+
+.freshness-banner{font-size:13px;line-height:1.4;margin:7px 0;padding:7px 10px;border-radius:9px}.freshness-ok{background:#103b31;color:#8df0c2}.freshness-warn{background:#493022;color:#ffd3a4}.share-snapshot{font-size:13px;padding:8px 12px;margin:5px 0 2px;background:#b7e8f6;color:#092434}@media(max-width:600px){.freshness-banner{font-size:12px;margin:5px 0;padding:6px 9px}.share-snapshot{font-size:12px;padding:7px 10px}}
+
+.highest-psi{margin:11px 0;padding:13px;border:1px solid #4a7185;border-radius:14px;background:#102c3e}.highest-psi-heading{font-size:13px;font-weight:750;color:#d4e9f3}.highest-psi #highestPsiReading{font-size:21px;font-weight:800;margin:7px 0;overflow-wrap:anywhere}.highest-psi-meta{font-size:12px;color:#b6d1e0;line-height:1.5}.highest-psi button{font-size:12px;padding:8px 12px;margin-top:9px;background:#b7e8f6;color:#092434}.highest-psi button:disabled{opacity:.55;cursor:not-allowed}@media(max-width:600px){.highest-psi{padding:10px;margin:9px 0}.highest-psi #highestPsiReading{font-size:18px}}
+
+.psi-ranking{margin-top:11px;padding-top:9px;border-top:1px solid #45687b}.psi-ranking-title{font-size:12px;font-weight:750;color:#c5e5f4}.psi-ranking ol{list-style:decimal;margin:7px 0 0;padding-left:24px}.psi-ranking li{font-size:13px;display:list-item;padding:4px 0;border-bottom:1px solid #294a60}.psi-ranking li span{display:inline-block;width:70%}.psi-ranking li strong{float:right}.psi-ranking-top{color:#a5f2c8;font-weight:700}.psi-ranking-note{font-size:11px;color:#ffdab2;margin:7px 0 0}.share-menu{margin-top:10px}.share-menu summary{cursor:pointer;display:inline-block;padding:9px 13px;border-radius:11px;background:#b7e8f6;color:#092434;font-size:13px;font-weight:800}.share-menu summary:focus-visible{outline:2px solid #fff;outline-offset:3px}.share-menu-actions{display:flex;flex-wrap:wrap;gap:8px;padding:9px 0}.share-menu-actions button{font-size:12px;padding:8px 10px;margin:0;background:#b7e8f6;color:#092434}.v47-pin.psi-highest-pin{outline:none!important;outline-offset:0;box-shadow:none!important}.v47-pin.psi-highest-pin:after{content:' ★';color:#ffce43}@media(max-width:600px){.psi-ranking li{font-size:12px}}
+
+.map-highest-explainer{font-size:12px;line-height:1.45;color:#d9e8f6;margin:5px 0 11px}.view-highest-map{margin:10px 0 0;padding:8px 11px;font-size:12px;background:#d7eef5;color:#0b2536}.psi-ranking ol li{list-style-position:outside}
+.v47-pin .measure-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:3px;vertical-align:middle;border:1px solid #ffffff66}.v47-pin .pin-dual small{white-space:nowrap}</style><style id="v27-styles">
+.map-v10{background:radial-gradient(ellipse at 52% 46%,#20475c 0%,#132d43 55%,#102237 100%);border-color:#4a7890}
+.map-v10 svg{filter:drop-shadow(0 5px 12px #020a1480)}
+.map-v10 .geo-point{touch-action:manipulation}
+.map-v10 .geo-point circle{transition:stroke .18s,filter .18s;stroke:#eaf5ff}
+.map-v10 .geo-point[aria-pressed="true"] circle{filter:drop-shadow(0 0 8px #b7edff);stroke-width:5}
+.map-v10 .geo-point:focus-visible circle{stroke:#b3f4ff;stroke-width:6}
+#v27-status{margin:9px 0 0;color:#b9d4e5;font-size:13px;line-height:1.5}
+#v27-status.warning{color:#ffd778}
+#v27-status.error{color:#ffad9f}
+@media(max-width:600px){.map-v10{padding:12px 10px}.map-v10 svg{max-height:240px}.map-caption{line-height:1.45}}
+</style><style id="v28-styles">
+@media(max-width:600px){
+main{padding-top:14px}.hero{padding:16px;margin:16px 0}.hero h1{font-size:29px;line-height:1.12}.hero p{line-height:1.4}
+.summary{margin:12px 0;gap:9px}.summary .card{padding:12px}
+#map>h2{margin:15px 0 6px;font-size:23px}
+#map>p.muted{font-size:14px;margin:4px 0 9px}
+.map-v10{padding:10px;margin:9px 0 13px}
+.map-v10 svg{max-height:210px}
+.map-caption{font-size:11px;line-height:1.35}
+.map-detail{padding:14px;margin:12px 0}
+.map-detail #guidanceText{font-size:15px;line-height:1.4}
+}
+#v28-check{font-size:12px;color:#b9d4e5;margin:5px 0 0;line-height:1.5}
+#v28-check.warn{color:#ffd778}
+#v28-check.fail{color:#ffad9f}
+</style><style id="v29-styles">.mask-panel{margin:18px 0;border-color:#426d80}.mask-panel h2{margin-top:0}.mask-panel p{line-height:1.5}.mask-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:14px 0}.mask-actions a{display:flex;align-items:center;justify-content:center;min-height:48px;padding:12px;border:1px solid #4e8293;border-radius:12px;background:#1b3b4c;color:#b5f4ee;text-decoration:none;font-weight:700;text-align:center}.mask-actions a:focus-visible{outline:3px solid #f7d26b;outline-offset:2px}@media(max-width:600px){.mask-panel{padding:15px}.mask-actions{grid-template-columns:1fr}.hero{padding:14px}.hero .muted{font-size:14px}.hero h1{font-size:27px}}</style><style id="v30-styles">.mask-choice{border:1px solid #426d80;border-radius:14px;padding:15px;margin:14px 0;background:#102b3d}.mask-choice h3{margin:0 0 9px}.mask-choice h4{margin-bottom:7px}.mask-choice label{display:block;margin:8px 0}.mask-postal-row{display:flex;gap:8px;flex-wrap:wrap}.mask-postal-row input{min-width:125px;flex:1;padding:12px;border-radius:10px;background:#1c344c;color:#fff;border:1px solid #45617b;font-size:16px}.mask-postal-row button{min-height:48px}.mask-choice p{line-height:1.5}@media(max-width:600px){.mask-postal-row{flex-direction:column}.mask-choice{padding:12px}.mask-postal-row input{width:100%}}</style><style id="v31-styles">.map-external{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;margin:6px 2px 15px}.map-external a,.mask-primary-link{display:inline-block;padding:12px 15px;background:#1c4758;border:1px solid #70b7c6;border-radius:12px;color:#c6fff5;font-weight:750;text-decoration:none}.map-external span{font-size:12px;color:#b9cadb}.mask-primary-link{display:block;text-align:center;background:#37c7a3;color:#08211c}.map-v10 .geo-point:focus-visible{outline:2px solid #fff;outline-offset:3px}@media(max-width:600px){.map-external a{width:100%;text-align:center}.map-v10 .map-topline{font-size:10px}.map-v10 svg{max-height:225px}}</style><style id="v32-styles">
+/* Version 33: embedded official OneMap, compact Android-first presentation */
+#officialMapWrap{margin:12px 0;border:1px solid #47798b;border-radius:16px;overflow:hidden;background:#10283b}
+#officialMap{height:clamp(270px,50vw,410px);width:100%;z-index:0}
+#officialMapFallback{padding:12px;color:#d4e5ef;font-size:13px}
+#officialMapWrap .leaflet-container{background:#142a3b;font-family:inherit}
+#officialMapWrap .leaflet-popup-content-wrapper{background:#142238;color:#eaf2ff}
+#officialMapWrap .leaflet-popup-tip{background:#142238}
+.map-region-dot{background:#142238;border:2px solid white;border-radius:50%;width:58px;height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 3px 12px #0008;color:#f7d26b;font-weight:800;line-height:1.1;cursor:pointer}
+.map-region-dot small{font-size:10px;color:#eaf2ff;font-weight:600}
+.map-region-dot strong{font-size:20px}
+.map-region-dot.active{outline:3px solid #a7e9ff;outline-offset:2px}
+#officialMapWrap .leaflet-div-icon{border:0;background:transparent}
+#schematicToggle{background:#1c4758;color:#bff5f0;border:1px solid #70b7c6;padding:9px 12px}
+#schematicContent[hidden]{display:none!important}
+@media(max-width:600px){header .brand{font-size:22px}.hero{padding:14px;margin:14px 0}.hero h1{font-size:25px}.hero p{font-size:14px;line-height:1.4}.summary{gap:8px}.summary .card{padding:12px}.map-v10{padding:11px}.mask-panel p{font-size:14px;line-height:1.45}.mask-choice{padding:12px}.mask-choice h3{font-size:18px}.mask-choice p{margin:8px 0}#officialMap{height:310px}}
+</style><style id="v33-styles">
+/* Version 33: simple full-island map without overlapping map tiles */
+.map-v10 svg{width:100%;height:auto;max-height:none!important;min-height:0!important;aspect-ratio:540/225;overflow:visible}
+.map-v10{padding:12px!important}
+.map-v10 .geo-point circle{stroke-width:2.5;filter:drop-shadow(0 2px 3px #00101b)}
+.map-v10 .geo-point .place{font-size:12px}
+.map-v10 .geo-point .geo-value{font-size:22px}
+.map-v10 .geo-point[aria-pressed=true] circle{stroke-width:4}
+.map-v10 .map-external{margin:10px 0 12px}
+@media(max-width:600px){.map-v10 svg{aspect-ratio:540/225}.map-v10{padding:10px!important}.map-v10 .map-topline{font-size:10px}.map-v10 .geo-point .place{font-size:12px}.map-v10 .geo-point .geo-value{font-size:22px}}
+</style><style id="v34-styles">.map-v10 svg{display:block;width:100%;height:auto;aspect-ratio:auto!important;max-height:none!important;overflow:visible}.map-v10 .geo-point circle{stroke:#f0f9ff;stroke-width:2.5;filter:drop-shadow(0 2px 3px #071624)}.map-v10 .geo-point[aria-pressed=true] circle{stroke:#fff;stroke-width:4;filter:drop-shadow(0 0 6px #a7e9ff)}.map-v10 .geo-point .place{font-size:12px!important}.map-v10 .geo-point .geo-value{font-size:21px!important}@media(max-width:600px){.map-v10{padding:10px!important}.map-v10 svg{width:100%;height:auto;min-height:0!important;max-height:none!important}}</style><style id="v35-styles">.map-v10 svg{width:100%;height:auto;aspect-ratio:auto!important;overflow:visible}.map-v10 .geo-point circle{stroke-width:2.5}.map-v10 .geo-point .place{font-size:12px!important}.map-v10 .geo-point .geo-value{font-size:21px!important}.region-picker{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin:12px 0}.region-picker button{min-width:0;padding:12px 2px;background:#173a50;color:#d9f4ff;border:1px solid #6c9cb1;border-radius:12px;font-size:clamp(11px,2.5vw,16px)}.region-picker button[aria-pressed="true"]{border:2px solid #f7d26b;background:#285069}@media(max-width:360px){.region-picker{grid-template-columns:repeat(3,minmax(0,1fr))}}.map-v10 #schematicContent>svg{display:none}.region-picker{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.region-picker button{padding:18px 8px;font-size:17px;font-weight:700;text-align:center}.region-picker button:last-child{grid-column:1/-1}.map-v10 .map-caption{font-size:14px}.map-v10 .map-external{margin-top:14px}@media(max-width:360px){.region-picker{grid-template-columns:repeat(2,minmax(0,1fr))}}.region-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:". north ." "west central east" ". south .";gap:8px}.region-picker button{padding:16px 2px;font-size:clamp(12px,3vw,17px);line-height:1.4}.region-picker button[data-region="north"]{grid-area:north}.region-picker button[data-region="south"]{grid-area:south}.region-picker button[data-region="west"]{grid-area:west}.region-picker button[data-region="east"]{grid-area:east}.region-picker button[data-region="central"]{grid-area:central}.region-picker button:last-child{grid-column:auto}@media(max-width:360px){.region-picker{grid-template-columns:repeat(3,minmax(0,1fr))}}.forecast-official-link{display:block;text-align:center;padding:16px;background:#31c2a6;color:#082c32!important;font-weight:800;border-radius:14px;text-decoration:none;margin:12px 0}</style><style id="v46-hybrid">
+.hybrid-map{padding:16px!important}.hybrid-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.hybrid-heading h3{margin:14px 0 8px;font-size:18px}.hybrid-heading a{font-size:13px}.hybrid-island{position:relative;width:100%;max-width:600px;margin:6px auto 0;background:radial-gradient(ellipse,#183b50,#0b2033);border-radius:14px;overflow:hidden}.hybrid-island svg{display:block;width:100%;height:auto;min-height:0!important;aspect-ratio:2.4/1.38!important}.hybrid-pin{position:absolute;display:grid;place-items:center;width:26px;height:26px;border:2px solid #fff;border-radius:50%;background:#163447;color:white;font-weight:900;font-size:12px;box-shadow:0 2px 8px #0009}.pin-n{top:19%;left:50%}.pin-w{top:49%;left:22%}.pin-c{top:44%;left:49%}.pin-e{top:45%;left:75%}.pin-s{top:69%;left:57%}.hybrid-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:15px 0}.hybrid-legend>div{border:1px solid #3d6274;padding:11px;border-radius:12px;display:flex;flex-direction:column;gap:7px}.hybrid-legend strong{font-size:13px}.hybrid-legend span{font-size:11px;display:flex;gap:6px;align-items:center}.hybrid-legend i{display:inline-block;width:10px;height:10px;flex-shrink:0;border-radius:50%}.region-heading{font-size:17px;margin:16px 0 10px}.hybrid-map .region-picker{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-areas:none!important;gap:9px!important}.hybrid-map .region-picker button{grid-area:auto!important;grid-column:auto!important;display:block;min-height:110px;padding:12px 8px;background:#152d43!important;border:1px solid #436a7d!important;color:#fff!important;text-align:left;font-size:15px!important}.hybrid-map .region-picker button:last-child{grid-column:1/-1!important}.hybrid-map .region-picker button[aria-pressed=true]{outline:3px solid #a5e1e4;outline-offset:1px}.dual-reading{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.dual-reading>span{display:flex;flex-direction:column;gap:2px}.dual-reading b{font-size:clamp(23px,6vw,32px);line-height:1.15}.dual-reading small{font-size:11px;font-weight:600;color:#d3e4ef}.hybrid-map .map-caption{font-size:12px;line-height:1.5;margin:8px 0 12px}@media(max-width:420px){.hybrid-map{padding:11px!important}.hybrid-legend{gap:7px}.hybrid-legend>div{padding:8px}.hybrid-legend span{font-size:10px}.hybrid-pin{width:22px;height:22px;font-size:10px}}
+</style><style id="v47-ux">.v47-map{position:relative;width:100%;height:270px;border-radius:14px;overflow:hidden;border:1px solid #527a87;background:#dce9ed}.v47-map iframe{width:100%;height:100%;border:0;pointer-events:none;filter:saturate(.75)}.v47-pins{position:absolute;inset:0;pointer-events:none}.v47-pin{pointer-events:auto;position:absolute;transform:translate(-50%,-50%);min-width:53px;min-height:49px;padding:4px 6px;background:#102c3cf2;color:white;border:2px solid var(--pin-color,#fff);border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 7px #0008;line-height:1.1;cursor:pointer}.v47-pin span{font-size:10px;font-weight:700}.v47-pin b{font-size:21px;color:var(--pin-color,#fff)}.v47-pin.active{outline:3px solid #fff;outline-offset:1px;z-index:2}.v47-n{left:50%;top:37%}.v47-w{left:23%;top:58%}.v47-c{left:50%;top:54%}.v47-e{left:78%;top:57%}.v47-s{left:50%;top:69%}.v47-active{margin:12px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px;border:1px solid #618b99;border-radius:12px;background:#122d40}.v47-active>div:first-child{display:flex;flex-direction:column;gap:5px}.v47-active strong{font-size:18px}.v47-active span{font-size:12px;color:#c1d6e0}.v47-active-values{display:flex;gap:16px;text-align:center}.v47-active-values>div{display:flex;flex-direction:column;gap:2px}.v47-active-values small{font-size:10px;color:#d1e4ec}.v47-active-values b{font-size:27px}.v47-details{border:1px solid #43687c;border-radius:12px;padding:10px;margin-top:10px}.v47-details summary{cursor:pointer;font-weight:700;font-size:14px;padding:6px}.v47-details .region-picker{margin-top:12px}@media(max-width:400px){.v47-map{height:235px}.v47-pin{min-width:46px;min-height:44px;padding:3px}.v47-pin b{font-size:18px}.v47-active-values{gap:9px}.v47-active-values b{font-size:23px}} </style><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><style id="hccc-map-clean-v68">
+.v47-map{position:relative;height:340px!important;overflow:hidden!important;isolation:isolate;border-radius:16px}
+#hccc-geo-map{width:100%;height:100%;overflow:hidden;position:relative}
+#hccc-geo-map .leaflet-container{width:100%;height:100%;background:#cfe6ee}
+#hccc-geo-map .leaflet-tile{max-width:none!important;max-height:none!important;width:256px!important;height:256px!important;object-fit:fill}
+#hccc-geo-map .leaflet-control-attribution{font-size:9px;background:#fffe}
+.v47-pins{display:block!important;z-index:5}
+.hccc-marker-anchor{background:transparent;border:0}
+.hccc-leaflet-region{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px;min-height:57px;border:3px solid #ffcc08;border-radius:13px;background:#102c3c;color:white;font-size:12px;font-weight:700;line-height:1.2;box-shadow:0 3px 8px #0009;padding:3px;cursor:pointer}
+.hccc-leaflet-region b{color:#ffcc08;font-size:22px}
+.hccc-leaflet-region.selected{outline:3px solid white}
+@media(max-width:420px){.v47-map{height:340px!important}.hccc-leaflet-region{width:58px;min-height:52px}.hccc-leaflet-region b{font-size:19px}}
+
+/* Keep the selected measurement visually distinct on mobile. */
+.air-map-toggle{display:grid;grid-template-columns:1fr 1fr;gap:3px;border:1px solid #79a5b5;border-radius:13px;overflow:hidden;background:#17394c;margin:12px 0}
+.air-map-toggle button{min-width:0;padding:12px 5px;border-radius:10px;background:transparent;color:#e8f5fa;font-size:clamp(13px,3.6vw,17px)}
+.air-map-toggle button[aria-pressed="true"]{background:#3383c7;color:#fff}
+.air-map-toggle button[aria-pressed="false"]{background:#17394c;color:#d8eaf3}
+</style><link rel="manifest" href="./manifest.webmanifest"><meta name="theme-color" content="#0b1526"><style id="map-dual-metrics-fix">
+.v47-pin{min-width:100px!important;min-height:67px!important;padding:6px 7px!important}
+.v47-pin .pin-dual{display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;margin-top:5px}
+.v47-pin .pin-dual>span{display:flex;flex-direction:column;align-items:center;min-width:0}
+.v47-pin .pin-dual small{font-size:9px;color:#dceaf3;font-weight:700}
+.v47-pin .pin-dual b{font-size:20px;line-height:1.1;color:#fff}
+.v47-pin.psi-highest-pin{outline:3px solid #ffce43!important}
+@media(max-width:420px){.v47-pin{min-width:88px!important;min-height:63px!important;padding:5px!important}.v47-pin .pin-dual b{font-size:18px}.v47-pin .pin-dual small{font-size:8px}}
+</style><style id="map-declutter-v1">
+/* Offset labels into distinct lanes; pin coordinates are visual anchors, not NEA region boundaries. */
+.v47-map .v47-pin{min-width:76px!important;width:76px!important;min-height:59px!important;padding:4px!important;border-radius:10px!important}
+.v47-map .v47-pin>span:first-child{font-size:11px!important}
+.v47-map .v47-pin .pin-dual{gap:2px;margin-top:3px}
+.v47-map .v47-pin .pin-dual small{font-size:8px!important}
+.v47-map .v47-pin .pin-dual b{font-size:17px!important}
+.v47-map .v47-pin[data-region="north"]{transform:translate(-50%,-110%)!important}
+.v47-map .v47-pin[data-region="central"]{transform:translate(-50%,-50%)!important}
+.v47-map .v47-pin[data-region="south"]{transform:translate(-50%,10%)!important}
+.v47-map .v47-pin[data-region="west"]{transform:translate(-95%,-50%)!important}
+.v47-map .v47-pin[data-region="east"]{transform:translate(-5%,-50%)!important}
+.v47-map .v47-pin.psi-highest-pin{outline-width:2px!important;outline-offset:2px!important}
+@media(max-width:390px){.v47-map .v47-pin{width:69px!important;min-width:69px!important;min-height:56px!important}.v47-map .v47-pin .pin-dual b{font-size:16px!important}}
+</style><style id="deduplicate-reading-cards">#psi,#pm25{display:none!important}</style><style id="map-first-home-v1">#map{margin-top:10px}#map>h2{font-size:clamp(1.35rem,4vw,2rem);margin:0 0 6px}#map>.muted{margin:0 0 10px}.map-v10{margin-top:6px}.hero{margin-top:20px}@media(max-width:700px){#map .map-highest-explainer{font-size:.82rem;margin:8px 0}#map .map-caption{font-size:.82rem;margin:8px 0}#map .map-topline{font-size:.8rem}}</style><style id="highest-psi-pin-consistency">.v47-pin.highest-psi-pin{outline:none!important;outline-offset:0!important;box-shadow:0 2px 7px #0008!important}.v47-pin.highest-psi-pin::after{content:none!important;display:none!important}#refresh{transition:transform .12s,filter .15s}#refresh:active{transform:scale(.96);filter:brightness(.88)}#refresh:disabled{opacity:.8;cursor:wait}#refresh.refreshing{filter:brightness(.88)}</style><style id="metric-switch-ux-fix">
+/* Metric switch: selected measure is visually dominant; both values remain available. */
+.v47-pin .pin-dual>span{transition:opacity .15s ease,transform .15s ease,background .15s ease;border-radius:7px;padding:2px}
+.v47-pin.metric-pm-active .pin-dual>span:nth-child(1),
+.v47-pin.metric-psi-active .pin-dual>span:nth-child(2){background:#ffffff25;transform:scale(1.07)}
+.v47-pin.metric-pm-active .pin-dual>span:nth-child(2),
+.v47-pin.metric-psi-active .pin-dual>span:nth-child(1){opacity:.52}
+.v47-pin.metric-pm-active .pin-dual>span:nth-child(1) b,
+.v47-pin.metric-psi-active .pin-dual>span:nth-child(2) b{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.dual-region-panel{display:none!important}
+.air-map-toggle button[aria-pressed="true"]{box-shadow:inset 0 0 0 2px #d6f4ff}
+@media(prefers-reduced-motion:reduce){.v47-pin .pin-dual>span{transition:none}}
+</style><style id="professional-release-v1">
+:root{color-scheme:dark}button,a{touch-action:manipulation}button:focus-visible,a:focus-visible{outline:3px solid #f7d26b;outline-offset:3px}
+header{align-items:flex-start}header .tag{line-height:1.45;max-width:680px}
+#professional-health{margin:12px 0 16px;padding:12px 15px;background:#142b3d;border:1px solid #3c6374;border-radius:14px}
+#professional-health .health-title{font-weight:800;margin-bottom:8px}
+#professional-health .health-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#professional-health .health-item{min-width:0;background:#1c394c;border-radius:10px;padding:10px}
+#professional-health .health-item span{display:block;color:#afc8da;font-size:12px}
+#professional-health .health-item strong{display:block;font-size:13px;overflow-wrap:anywhere;margin-top:3px}
+#professional-health .health-links{margin-top:9px;font-size:13px}
+@media(min-width:760px){#professional-health .health-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:700px){header .tag{font-size:14px}header .brand{font-size:clamp(22px,5vw,28px)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style><style id="health-compact-v2">
+#professional-health{padding:0;margin:10px 0 16px}
+#professional-health>summary{cursor:pointer;list-style:none;padding:13px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+#professional-health>summary::-webkit-details-marker{display:none}
+#professional-health>summary:after{content:"▾";color:#a8cddd}
+#professional-health[open]>summary:after{content:"▴"}
+#professional-health .health-title{margin:0}
+#health-summary{font-size:12px;font-weight:600;color:#b9d5e4;text-align:right;margin-left:auto}
+#professional-health .health-grid,#professional-health .health-links{margin:0 13px 12px}
+@media(max-width:700px){main{padding-bottom:calc(145px + env(safe-area-inset-bottom))}#map,#trends,#advisory-panel,#more-links{scroll-margin-bottom:155px}}
+</style><style id="sg-portfolio-footer-standard">footer{box-sizing:border-box!important;width:100%;max-width:1000px;margin-left:auto!important;margin-right:auto!important;text-align:center!important;font-size:14px!important;line-height:1.65!important;color:#b7cad6!important;padding-left:20px!important;padding-right:20px!important}footer p,footer div{max-width:900px;margin-left:auto;margin-right:auto}footer strong,footer b{font-weight:700}footer a{text-underline-offset:3px}footer p{overflow-wrap:anywhere;margin-top:12px;margin-bottom:12px}@media(max-width:480px){footer{font-size:13px!important;padding-left:18px!important;padding-right:18px!important}}</style><meta name="sg-app-version" content="1.0.0"><meta name="sg-app-release-date" content="15 Nov 2026"><meta name="sg-app-release-date-status" content="existing-page-label"></head><body><div style="background:#854d0e;color:white;text-align:center;padding:8px;font: bold 14px system-ui">PR #134 PREVIEW — Not production</div><main><header><div><div class="brand">🌫️ SG Haze Monitor</div><div class="tag">Singapore air quality at a glance · Version 1.0.0 · Release date: 15 Nov 2026</div></div><button id="refresh">↻ Retry live data</button></header><details id="professional-health" aria-label="Data health centre"><summary class="health-title">🛡 Data Health Centre <span id="health-summary">Checking feed…</span></summary><div class="health-grid"><div class="health-item"><span>Feed status</span><strong id="health-feed">Checking</strong></div><div class="health-item"><span>Official observation time</span><strong id="health-observed">Checking</strong></div><div class="health-item"><span>Last check in this browser</span><strong id="health-checked">Not yet checked</strong></div><div class="health-item"><span>Data confidence</span><strong id="health-confidence">Unverified</strong></div></div><div class="health-links"><span id="health-error" role="status">No PSI request error reported</span><div>Readings may be cached or delayed. <a href="./intelligence.html">Intelligence Centre</a> · <a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer">Official NEA guidance</a></div></div></details><section id="map"><h2>Explore Singapore air quality</h2><p class="muted">Select a region for its latest official 24-hour PSI and practical guidance.</p><div class="map-v10 hybrid-map"><div class="map-topline"><span>LIVE REGIONAL AIR QUALITY</span><span class="map-live" id="mapFeedStatus">● Checking NEA data</span></div><p id="mapUpdated" class="map-updated" aria-live="polite">Latest PSI: checking timestamp…</p><div class="hybrid-heading"><h3>Singapore regional air quality</h3><a href="https://www.onemap.gov.sg/" target="_blank" rel="noopener noreferrer">Full street map ↗</a></div><div class="air-map-toggle" role="group" aria-label="Map measurement"><button type="button" id="mapPmMode" aria-pressed="true">1-hour PM2.5</button><button type="button" id="mapPsiMode" aria-pressed="false">24-hour PSI</button></div><p class="map-caption" id="mapModeHelp">PM2.5 readings in µg/m³. Tap a marker to select a region.</p><p class="map-highest-explainer">★ Yellow outlines mark regions with the highest <strong>24-hour PSI</strong>, even when the map displays PM2.5.</p><div class="map-psi-highlight" id="mapPsiHighlight" role="status">★ Highest 24-hour PSI: awaiting regional readings</div><div class="v47-map" aria-label="Street map of Singapore with five selectable regional air quality markers"><div id="hccc-geo-map" aria-hidden="true" style="width:100%;height:100%"></div><div class="v47-pins"><button type="button" data-region="north" class="v47-pin v47-n" aria-label="North region">North</button><button type="button" data-region="west" class="v47-pin v47-w" aria-label="West region">West</button><button type="button" data-region="central" class="v47-pin v47-c" aria-label="Central region">Central</button><button type="button" data-region="east" class="v47-pin v47-e" aria-label="East region">East</button><button type="button" data-region="south" class="v47-pin v47-s" aria-label="South region">South</button></div></div><div class="map-psi-legend" aria-label="24-hour PSI colour categories"><span><i class="legend-good"></i>Good–Moderate 0–100</span><span><i class="legend-unhealthy"></i>Unhealthy 101–200</span><span><i class="legend-very"></i>Very unhealthy 201–300</span><span><i class="legend-hazard"></i>Hazardous &gt;300</span></div><p class="map-caption">Base map © OpenStreetMap contributors. Markers show approximate regional locations, not official NEA boundaries. <a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer">NEA official haze map ↗</a></p><div class="v47-active" role="status" aria-live="polite"><div><strong id="v47-active-name">Selected region</strong><span id="v47-active-status">Latest readings appear here</span></div><div class="v47-active-values"><div><small>24-hour PSI</small><b id="v47-psi">—</b></div><div><small>1-hour PM2.5</small><b id="v47-pm">—</b></div></div></div><details class="v47-details"><summary>Compare all five regions and colour scales</summary><div class="region-picker" aria-label="Select region"><button type="button" data-region="north">North</button><button type="button" data-region="south">South</button><button type="button" data-region="east">East</button><button type="button" data-region="west">West</button><button type="button" data-region="central">Central</button></div><div class="hybrid-legend"><div><strong>24-hour PSI</strong><span><i style="background:#25b95c"></i>Good to Moderate 0–100</span><span><i style="background:#ffcc08"></i>Unhealthy 101–200</span><span><i style="background:#ff941b"></i>Very unhealthy 201–300</span><span><i style="background:#ee1735"></i>Hazardous 301+</span></div><div><strong>1-hour PM2.5 (µg/m³)</strong><span><i style="background:#25b95c"></i>Normal 0–55</span><span><i style="background:#ffcc08"></i>Elevated 56–150</span><span><i style="background:#ff941b"></i>High 151–250</span><span><i style="background:#ee1735"></i>Very high 251+</span></div></div></details></div><div id="regionGuidance" class="map-detail guidance" aria-live="polite"><div class="detail-heading"><div><span class="detail-kicker">SELECTED REGION</span><h3 id="selectedRegionName">West</h3></div><div class="detail-number" id="selectedRegionPsi">—</div></div><p id="guidanceText">Waiting for official readings…</p><p class="trendnote">General guidance, not an official NEA alert. <a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer">Official haze advisories ↗</a></p></div></section><section class="hero"><div class="pill">Official NEA data via data.gov.sg</div><h1>How hazy is Singapore?</h1><div class="quick-readings" aria-label="Selected region air quality at a glance"><div class="quick-reading" id="quickPsiTile" data-band="unknown"><div class="quick-label">24-hour PSI · <span class="quick-region">Central</span></div><div class="quick-number" id="quickPsiValue">—</div><div class="quick-band" id="quickPsiBand">Checking…</div><div class="quick-source" id="quickPsiSource">Waiting for readings</div></div><div class="quick-reading" id="quickPmTile" data-band="unknown"><div class="quick-label">1-hour PM2.5 · <span class="quick-region">Central</span></div><div class="quick-number" id="quickPmValue">—</div><div class="quick-band" id="quickPmBand">Checking…</div><div class="quick-source" id="quickPmSource">µg/m³ · Waiting for readings</div></div></div><p class="quick-note">Regional readings for the selected area. PSI and PM2.5 use different scales.</p><aside class="highest-psi" aria-live="polite"><div class="highest-psi-heading">Highest 24-hour PSI across Singapore</div><div id="highestPsiReading">Checking regional readings…</div><div id="highestPsiMeta" class="highest-psi-meta"></div><div id="psiRanking" class="psi-ranking" aria-live="polite">Regional ranking will appear when readings load.</div><button type="button" id="viewHighestPsiMap" class="view-highest-map">View highest PSI on map ↓</button><button id="shareHighestPsi" type="button" disabled>↗ Share highest PSI</button></aside><details class="quick-details"><summary>About these readings</summary><p class="muted">Latest available official 24-hour PSI and 1-hour PM2.5 measurements. Colours show their respective bands; saved readings are not live. Select another region on the map below.</p></details><div id="status">Loading official readings…</div><p id="freshnessBanner" role="status" aria-live="polite" class="freshness-banner">Checking reading freshness…</p><button type="button" id="shareSnapshot" class="share-snapshot">↗ Share latest regional readings</button><details class="data-details"><summary>Reading times &amp; refresh details</summary><div class="data-details-body"><p id="updated" class="muted"></p><p id="freshness" class="muted" aria-live="polite"></p><p id="v28-check" role="status" aria-live="polite">Checking data freshness…</p><p id="v27-status" role="status" aria-live="polite">Automatic refresh every 15 minutes while this page is open.</p></div></details></section><section class="summary" aria-label="Regional quick view"><div class="card"><label for="focusRegion">Selected region</label><select id="focusRegion" aria-label="Choose region"></select><div id="focusPsi" class="value">—</div><div id="focusGrade" class="pill">PSI unavailable</div></div><div class="card"><div class="muted">1-hour PM2.5</div><div id="focusPm" class="value">—</div><div class="pill">µg/m³</div></div></section><div class="tools"><button id="exportCsv" type="button">↓ Export actual readings (CSV)</button></div><nav class="legacy-section-links" aria-label="Additional sections"><a href="#map">Regional map</a><a href="#map" data-map-mode="psi">24-hour PSI</a><a href="#map" data-map-mode="pm25">1-hour PM2.5</a><a href="#trends">Trends</a><a href="#guide">PSI guide</a><a href="#masks">Find N95 masks</a></nav><section class="card advisory" aria-live="polite"><h2>Air quality advisory</h2><p id="advisory">Waiting for official readings…</p><p class="trendnote">Automated interpretation of 24-hour PSI, not an official NEA alert. Check official health advice.</p></section><section id="activityPlanner" class="card" style="margin:24px 0"><h2>🌤️ PSI forecast &amp; outdoor activity planner</h2><p class="muted">Plan outdoor exercise, school activities and family outings using NEA's official guidance. Current readings are <strong>not</strong> a prediction.</p><div class="forecast-display" style="margin:18px 0;padding:16px;border:1px solid #41667a;border-radius:18px;background:#10283b"><h3 style="margin:0 0 8px">Official next-day PSI forecast</h3><p class="muted" style="margin:0 0 12px">NEA publishes next-day PSI forecasts during haze periods. This dashboard cannot yet verify and refresh the forecast automatically. Open the official forecast below for the current published range and date.</p><div id="datedPsiForecast" role="status" aria-live="polite" style="padding:12px;border:1px solid #41667a;border-radius:12px;margin:12px 0">Checking dated NEA PSI forecast…</div><section aria-label="NEA weather forecast" style="padding:12px 14px;border:1px solid #41667a;border-radius:14px;margin:12px 0;background:#10283b"><h4 style="margin:0 0 8px;font-size:16px">NEA 24-hour weather forecast</h4><div id="weatherOutlook" role="status" aria-live="polite" style="margin:0 0 8px;line-height:1.5">Loading official 24-hour weather outlook…</div><p class="muted" id="weatherLastSuccess" style="font-size:12px;margin:0 0 10px">No successful weather update this session.</p><button type="button" id="retryWeatherOutlook" style="margin:0;padding:10px 14px;font-size:14px">↻ Refresh NEA Weather Forecast</button><p class="muted" style="font-size:12px;margin:10px 0 0">Weather only — not a next-day PSI or haze forecast.</p></section><a class="forecast-official-link" href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer">↗ View live published forecast on NEA</a><p class="muted" style="font-size:13px">The gauge below is a category reference, not a live forecast.</p><svg viewBox="0 0 420 250" role="img" aria-label="Semicircular PSI scale: Good to Moderate 0 to 100, Unhealthy 101 to 200, Very unhealthy 201 to 300, Hazardous above 300" style="width:100%;height:auto;display:block"><path d="M 42 208 A 168 168 0 0 1 378 208" fill="none" stroke="#24b75d" stroke-width="43" pathLength="400" stroke-dasharray="100 300"/><path d="M 42 208 A 168 168 0 0 1 378 208" fill="none" stroke="#f9c722" stroke-width="43" pathLength="400" stroke-dasharray="100 300" stroke-dashoffset="-100"/><path d="M 42 208 A 168 168 0 0 1 378 208" fill="none" stroke="#ff941b" stroke-width="43" pathLength="400" stroke-dasharray="100 300" stroke-dashoffset="-200"/><path d="M 42 208 A 168 168 0 0 1 378 208" fill="none" stroke="#e93655" stroke-width="43" pathLength="400" stroke-dasharray="100 300" stroke-dashoffset="-300"/><text x="18" y="238" fill="#dce9f5" font-size="16">0</text><text x="86" y="75" fill="#dce9f5" font-size="15">100</text><text x="194" y="19" fill="#dce9f5" font-size="15">200</text><text x="320" y="75" fill="#dce9f5" font-size="15">300</text><text x="377" y="238" fill="#dce9f5" font-size="15">300+</text><text x="210" y="153" text-anchor="middle" fill="#f0f6ff" font-size="20" font-weight="bold">Forecast</text><text x="210" y="180" text-anchor="middle" fill="#f7d26b" font-size="19" font-weight="bold" id="datedForecastGaugeValue">Not available</text><text x="210" y="207" text-anchor="middle" fill="#b5cde1" font-size="12" id="datedForecastGaugeCaption">Check NEA for official range</text></svg><p class="muted" style="font-size:14px">Forecast values shown in previous screenshots are not automatically updated here. Use the official NEA page for the latest dated forecast. <a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer">View official NEA forecast ↗</a></p><div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:14px"><caption style="text-align:left;margin:10px 0;font-weight:700">Example advice when PSI is Unhealthy (101–200)</caption><thead><tr><th style="text-align:left;padding:10px;border-bottom:1px solid #41667a">Group</th><th style="text-align:left;padding:10px;border-bottom:1px solid #41667a">Outdoor activity guidance</th></tr></thead><tbody><tr><td style="padding:10px;border-bottom:1px solid #41667a">Healthy people</td><td style="padding:10px;border-bottom:1px solid #41667a">Reduce prolonged or strenuous outdoor physical exertion</td></tr><tr><td style="padding:10px;border-bottom:1px solid #41667a">Older adults, pregnant women, children</td><td style="padding:10px;border-bottom:1px solid #41667a">Minimise prolonged or strenuous outdoor physical exertion</td></tr><tr><td style="padding:10px">People with chronic heart or lung conditions</td><td style="padding:10px">Avoid prolonged or strenuous outdoor physical exertion; follow medical advice</td></tr></tbody></table></div></div><div class="grid" style="margin:14px 0"><label>When are you planning?<select id="activityWhen" style="display:block;width:100%;margin-top:8px"><option value="now">Now / next hour</option><option value="tomorrow">Tomorrow / next day</option></select></label><label>Who is participating?<select id="activityGroup" style="display:block;width:100%;margin-top:8px"><option value="healthy">Generally healthy adults</option><option value="vulnerable">Children, older adults or pregnant people</option><option value="medical">People with heart or lung conditions</option></select></label></div><div id="activityResult" class="card" aria-live="polite" style="background:#123047"></div><p class="muted" style="margin-top:14px"><strong>Official next-day PSI forecast:</strong> <span id="forecastAvailability">Check NEA for the latest published forecast; not available through this dashboard's live data feed.</span> NEA publishes next-day forecasts during haze periods, not necessarily every day.</p><p><a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer">View NEA forecast and haze outlook ↗</a> · <a href="https://www.haze.gov.sg/docs/default-source/posters/haze-pm-psi-guide-a4-english.pdf" target="_blank" rel="noopener noreferrer">Official outdoor activity guide ↗</a></p><p class="muted">Recheck live 1-hour PM2.5 before leaving. This planner is general guidance, not a forecast or an official alert.</p></section><section id="psi"><h2>24-hour PSI by region</h2><div class="grid reading-grid" id="psiCards"></div></section><section id="pm25"><h2>1-hour PM2.5 by region</h2><p class="muted">Concentration in µg/m³, not PSI. Use official NEA guidance when interpreting these readings.</p><div class="grid reading-grid" id="pmCards"></div></section><section id="trends"><h2>Regional trends</h2><p class="muted">Explore 24-hour, 48-hour or 7-day official readings. Tap or drag across the charts to inspect values and Singapore timestamps. Missing readings are never invented.</p><div class="card chartbox"><div class="charthead"><h3>24-hour PSI trend</h3><select id="psiRegion" aria-label="PSI region"></select></div><div class="chart-controls"><button class="rangebtn" data-range="24" aria-pressed="true">24 hours</button><button class="rangebtn" data-range="48" aria-pressed="false">48 hours</button><button class="rangebtn" data-range="168" aria-pressed="false">7 days</button></div><div id="psiChart" aria-live="polite"></div><p id="psiTrendInsight" class="trendnote" aria-live="polite">Trend insight awaiting readings.</p><div id="psiTooltip" class="charttooltip" aria-live="polite">Tap a chart point for its reading and time.</div></div><div class="card chartbox"><div class="charthead"><h3>1-hour PM2.5 trend (µg/m³)</h3><select id="pmRegion" aria-label="PM2.5 region"></select></div><div class="chart-controls"><button class="rangebtn" data-range="24" aria-pressed="true">24 hours</button><button class="rangebtn" data-range="48" aria-pressed="false">48 hours</button><button class="rangebtn" data-range="168" aria-pressed="false">7 days</button></div><div id="pmChart" aria-live="polite"></div><p id="pmTrendInsight" class="trendnote" aria-live="polite">Trend insight awaiting readings.</p><div id="pmTooltip" class="charttooltip" aria-live="polite">Tap a chart point for its reading and time.</div></div></section><section id="hazeAlerts"><h2>Haze alerts</h2><p class="muted">Optional alerts for official regional 24-hour PSI thresholds. Alerts are checked while this page is open; background push alerts require a separate notification service.</p><div class="card"><label><input type="checkbox" id="hazeAlertEnabled"> Enable in-page haze alerts</label><label style="display:block;margin-top:12px">Alert threshold <select id="hazeAlertThreshold"><option value="100">PSI above 100 — Unhealthy</option><option value="200">PSI above 200 — Very unhealthy</option><option value="300">PSI above 300 — Hazardous</option></select></label><p id="hazeAlertStatus" role="status" aria-live="polite" class="muted">Alerts are off.</p><button type="button" id="retryHazePsi" style="margin-top:10px">Retry live PSI</button><p id="hazePsiCheckedAt" class="muted" style="font-size:.85em">Last live check: waiting</p></div></section><section id="guide"><h2>Understanding 24-hour PSI</h2><div class="legend"><span class="good">0–100 Good to Moderate</span><span class="unhealthy">101–200 Unhealthy</span><span class="very">201–300 Very Unhealthy</span><span class="hazard">Above 300 Hazardous</span></div><p class="muted">When PSI is elevated, check the latest NEA health advisories, especially for children, older adults and people with heart or lung conditions.</p><p><a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer">Official Singapore haze advisories ↗</a></p></section><section id="masks" class="card mask-panel"><h2>🛡️ Find or collect N95 masks</h2><p class="muted">Check whether an official mask collection exercise is active, or find pharmacies where you can purchase N95 respirators.</p><div class="mask-choice"><h3>🎁 Check government mask collection</h3><p>If an official distribution exercise is active, use the government locator to check participating Community Clubs (CCs) or vending machines, eligibility and availability.</p><p class="trendnote">Collection schemes may be temporary or inactive. Check the official site for current availability and eligibility before travelling.</p><a class="mask-primary-link" href="https://go.gov.sg/hazemask" target="_blank" rel="noopener noreferrer">↗ Check official mask collection locator</a><p class="muted">Enter your six-digit postal code on the official site, if its locator is currently available. No postal code is collected by this dashboard.</p><h4>Who can collect?</h4><p>Eligibility depends on the current government distribution exercise. Historical eligibility rules may no longer apply. Confirm requirements with the official organiser.</p></div><div class="mask-choice"><h3>🛒 Buy N95 masks</h3><p>For residents who prefer to purchase masks, browse nearby pharmacies. Retailer listings do not guarantee N95 stock.</p><div class="mask-actions"><a href="https://www.google.com/maps/search/?api=1&amp;query=N95+respirator+pharmacy+Singapore" target="_blank" rel="noopener noreferrer">Find pharmacies selling N95 masks ↗</a></div></div><h3>Choosing a mask</h3><p>A properly fitted N95 respirator filters fine particles better than a loose-fitting surgical mask. A good face seal matters. N95 masks are generally not required for short outdoor exposure; follow official haze advice based on exposure and health needs.</p><p class="muted">People with heart or lung conditions should seek medical advice before wearing a tight-fitting respirator. Adult N95 masks may not fit children properly.</p><p><a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer">Official Singapore haze and health guidance ↗</a></p></section><section id="satellite-access" class="card" style="margin:18px 0;padding:18px;border:1px solid #537b8d;border-radius:16px;background:#142c40"><h2>🛰️ Satellite & regional haze</h2><p>Explore satellite imagery, regional fire hotspots and wind patterns around Singapore. Satellite observations are different from ground-level PSI and PM2.5 readings.</p><a href="./satellite.html" style="display:inline-block;padding:12px 16px;border-radius:12px;background:#40c8ac;color:#09231f;font-weight:800;text-decoration:none">Open satellite monitoring ↗</a></section>
+<footer><p><strong>© 2026 SG Haze Monitor — Developed by Desmond Song. All rights reserved.</strong> Original application code, custom interface and written content may not be copied, redistributed, rebranded or commercially reused without permission, except where permitted by law or applicable third-party licences. <a href="./COPYRIGHT.md">Copyright and attribution</a>.</p><p>Coastline is simplified from the Singapore GeoJSON published in johan/world.geo.json; regional markers are schematic, not NEA boundaries. Health guidance is general, not personalised medical advice. Independent informational dashboard, not affiliated with or endorsed by NEA. Source: <a href="https://data.gov.sg/" target="_blank" rel="noopener noreferrer">data.gov.sg</a>. Automatic refresh every 15 minutes while the page is open. Recent historical trends are requested from the official API and cached in this browser; availability depends on the API. Live readings require internet access; unavailable data are never replaced with estimates.</p></footer></main><script>
+const base='https://api-open.data.gov.sg/v2/real-time/api/';const historyKey='sg-haze-monitor-v4-history';let history={psi:[],pm:[]};try{const saved=JSON.parse(localStorage.getItem(historyKey)||'{}');for(const k of ['psi','pm'])if(Array.isArray(saved[k]))history[k]=saved[k].filter(x=>x&&Number.isFinite(x.t)&&x.values&&typeof x.values==='object').slice(-240)}catch(e){};const regions=['north','south','east','west','central'];const names={north:'North',south:'South',east:'East',west:'West',central:'Central'};let currentPsi=null,currentPm=null,lastPsiWasLive=false,lastPmWasLive=false,lastPmTimestamp=null;const $=id=>document.getElementById(id);function grade(v){return v<=50?['Good','good']:v<=100?['Moderate','moderate']:v<=200?['Unhealthy','unhealthy']:v<=300?['Very unhealthy','very']:['Hazardous','hazard']}function cards(id,readings,psi){$(id).innerHTML=regions.map(r=>{let v=readings?.[r],ok=typeof v==='number',g=psi&&ok?grade(v):null;return `<article class="card"><div class="muted">${names[r]}</div><div class="value ${g?.[1]||''}">${ok?v:'—'}</div><div class="pill">${ok?(psi?g[0]:'µg/m³'):'Unavailable'}</div></article>`}).join('')}function healthText(v){if(!Number.isFinite(v))return 'Reading unavailable. Check official NEA guidance.';if(v<=50)return 'Good: Normal activities are generally suitable. Continue checking official updates.';if(v<=100)return 'Moderate: Most people can continue normal activities. People with health concerns should follow official advice.';if(v<=200)return 'Unhealthy: Reduce prolonged or strenuous outdoor activity. Children, older adults and people with heart or lung conditions should take extra care and consult official guidance.';if(v<=300)return 'Very unhealthy: Minimise outdoor exertion and follow NEA health advisories, particularly for vulnerable groups.';return 'Hazardous: Avoid outdoor exertion and follow official public health instructions.'}document.querySelectorAll('.region-picker button').forEach(b=>b.addEventListener('click',()=>{ $('focusRegion').value=b.dataset.region;$('focusRegion').dispatchEvent(new Event('change'));}));const geoPositions={north:[330,123],west:[175,194],central:[330,188],east:[504,194],south:[330,220]};document.querySelectorAll('.v47-pin').forEach(b=>b.addEventListener('click',()=>{$('focusRegion').value=b.dataset.region;$('focusRegion').dispatchEvent(new Event('change'));}));function pmBand(v){return v<=55?['Normal','#25b95c']:v<=150?['Elevated','#ffcc08']:v<=250?['High','#ff941b']:['Very high','#ee1735']}function psiColor(v){return v<=100?'#25b95c':v<=200?'#ffcc08':v<=300?'#ff941b':'#ee1735'}let mapMode='pm';document.getElementById('mapPmMode').addEventListener('click',()=>{mapMode='pm';renderGeography()});document.getElementById('mapPsiMode').addEventListener('click',()=>{mapMode='psi';renderGeography()});function renderGeography(){document.getElementById('mapPmMode').setAttribute('aria-pressed',String(mapMode==='pm'));document.getElementById('mapPsiMode').setAttribute('aria-pressed',String(mapMode==='psi'));document.getElementById('mapModeHelp').textContent=mapMode==='pm'?'1-hour PM2.5 (µg/m³). Green: Normal (0–55); yellow: Elevated (56–150); orange: High (151–250); red: Very high (251+). Tap a region for both readings.':'24-hour PSI. Green: Good to Moderate (0–100); yellow: Unhealthy (101–200); orange: Very Unhealthy (201–300); red: Hazardous (above 300). Tap a region for both readings.';const selected=$('focusRegion').value;document.querySelectorAll('.region-picker button').forEach(b=>{const r=b.dataset.region,p=currentPsi?.[r],m=currentPm?.[r],pok=Number.isFinite(p),mok=Number.isFinite(m);b.setAttribute('aria-pressed',String(r===selected));b.innerHTML='<strong>'+names[r]+'</strong><span class="dual-reading"><span class="reading-psi"><small>24h PSI</small><b style="color:'+(pok?psiColor(p):'#a8bfd4')+'">'+(pok?p:'—')+'</b><small>'+(pok?grade(p)[0]:'Unavailable')+'</small></span><span class="reading-pm"><small>1h PM2.5</small><b style="color:'+(mok?pmBand(m)[1]:'#a8bfd4')+'">'+(mok?m:'—')+'</b><small>'+(mok?pmBand(m)[0]:'Unavailable')+'</small></span></span>';});document.querySelectorAll('.v47-pin').forEach(b=>{const r=b.dataset.region,p=currentPsi?.[r],m=currentPm?.[r],pok=Number.isFinite(p),mok=Number.isFinite(m);b.classList.toggle('active',r===selected);const validPsi=regions.filter(k=>Number.isFinite(currentPsi?.[k]));const maxPsi=validPsi.length?Math.max(...validPsi.map(k=>currentPsi[k])):null;b.classList.toggle('highest-psi-pin',maxPsi!==null&&pok&&p===maxPsi);b.style.setProperty('--pin-color',mapMode==='pm'?(mok?pmBand(m)[1]:'#8ca6b8'):(pok?psiColor(p):'#8ca6b8'));b.innerHTML='<span>'+names[r]+'</span><span class="pin-dual"><span><small><i class="measure-dot" style="background:'+(mok?pmBand(m)[1]:'#8ca6b8')+'"></i>PM2.5</small><b>'+(mok?m:'—')+'</b></span><span><small><i class="measure-dot" style="background:'+(pok?psiColor(p):'#8ca6b8')+'"></i>PSI</small><b>'+(pok?p:'—')+'</b></span></span>';b.classList.toggle('metric-pm-active',mapMode==='pm');b.classList.toggle('metric-psi-active',mapMode==='psi');b.setAttribute('aria-label',names[r]+', PSI '+(pok?p:'unavailable')+', PM2.5 '+(mok?m:'unavailable'));b.setAttribute('aria-pressed',String(r===selected));});const p=currentPsi?.[selected],m=currentPm?.[selected];$('v47-active-name').textContent=names[selected];$('v47-active-status').textContent=Number.isFinite(p)?grade(p)[0]+' PSI · '+(Number.isFinite(m)?pmBand(m)[0]+' PM2.5':'PM2.5 unavailable'):'Latest reading unavailable';$('v47-psi').textContent=Number.isFinite(p)?p:'—';$('v47-pm').textContent=Number.isFinite(m)?m:'—';$('v47-psi').style.color=Number.isFinite(p)?psiColor(p):'#d5e2ed';$('v47-pm').style.color=Number.isFinite(m)?pmBand(m)[1]:'#d5e2ed';$('selectedRegionName').textContent=names[selected];$('selectedRegionPsi').textContent=Number.isFinite(p)?p+' PSI':'—';$('selectedRegionPsi').style.color=Number.isFinite(p)?psiColor(p):'#eaf2ff';} function updateMap(){renderGeography();const selected=$('focusRegion').value;const v=currentPsi?.[selected],g=Number.isFinite(v)?grade(v):null;$('guidanceText').textContent=names[selected]+': '+healthText(v);$('regionGuidance').className='map-detail guidance '+(g?.[1]||'')}function focus(){const r=$('focusRegion').value,p=currentPsi?.[r],m=currentPm?.[r],ok=Number.isFinite(p);$('focusPsi').textContent=ok?p:'—';$('focusPsi').style.color=ok?({good:'#25b95c',moderate:'#25b95c',unhealthy:'#ffcc08',very:'#ff941b',hazard:'#ee1735'})[grade(p)[1]]:'#eaf2ff';$('focusGrade').textContent=ok?grade(p)[0]:'PSI unavailable';$('focusGrade').className='pill '+(ok?grade(p)[1]:'');$('focusPm').textContent=Number.isFinite(m)?m:'—';updateMap()}$('focusRegion').innerHTML=regions.map(r=>'<option value="'+r+'">'+names[r]+'</option>').join('');$('focusRegion').value='west';$('focusRegion').addEventListener('change',focus);$('exportCsv').addEventListener('click',()=>{const rows=[['type','timestamp_SGT','region','value','unit']];for(const [k,unit] of [['psi','PSI'],['pm','ug/m3']])for(const entry of history[k])for(const r of regions)if(Number.isFinite(entry.values[r]))rows.push([k,new Date(entry.t).toLocaleString('sv-SE',{timeZone:'Asia/Singapore'}),r,entry.values[r],unit]);if(rows.length===1){alert('No official readings available to export yet.');return}const csv=rows.map(row=>row.join(',')).join('\\r\\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='sg-haze-official-readings.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});function latest(data,key){const items=data?.data?.items||[];const usable=key?items.filter(item=>item?.readings?.[key]&&regions.some(region=>Number.isFinite(item.readings[key][region]))):items;return usable.length?usable.reduce((a,b)=>!a||String(b.timestamp)>String(a.timestamp)?b:a,null):null}function record(k,item,key){const values=item?.readings?.[key];const t=Date.parse(item?.timestamp);if(!values||!Number.isFinite(t))return;const row={t,values:Object.fromEntries(regions.filter(r=>Number.isFinite(values[r])).map(r=>[r,values[r]]))};if(!Object.keys(row.values).length)return;const a=history[k];const i=a.findIndex(x=>x.t===t);if(i>=0)a[i]=row;else a.push(row);a.sort((x,y)=>x.t-y.t);history[k]=a.slice(-240);try{localStorage.setItem(historyKey,JSON.stringify(history))}catch(e){}}const ranges={psi:24,pm:24};function chartColor(k,v){if(k==='psi'){return v<=50?'#58e5ad':v<=100?'#f7d26b':v<=200?'#ff9779':v<=300?'#f579ab':'#dca8ff'}return '#37c7a3'}function draw(k){const region=$(k==='psi'?'psiRegion':'pmRegion').value;const host=$(k==='psi'?'psiChart':'pmChart');const tip=$(k==='psi'?'psiTooltip':'pmTooltip');const cutoff=Date.now()-ranges[k]*3600000;const points=history[k].filter(x=>x.t>=cutoff&&Number.isFinite(x.values[region])).map(x=>({t:x.t,v:x.values[region]}));const insight=$(k==='psi'?'psiTrendInsight':'pmTrendInsight');if(insight){if(points.length<2)insight.textContent='Trend unavailable: at least two verified readings required.';else{const first=points[0],last=points[points.length-1],change=last.v-first.v;insight.textContent=(Math.abs(change)<1?'Stable':change>0?'Worsening':'Improving')+' over '+Math.round((last.t-first.t)/3600000)+' hours: '+(change>0?'+':'')+change.toFixed(0)+' '+(k==='psi'?'PSI points':'µg/m³')+' ('+points.length+' recorded observations). Historical change, not a forecast.'}}if(points.length<2){host.innerHTML='<p class="muted">'+(points.length===1?'Only one official reading is available for this period. A trend needs at least two readings.':'No sufficient official readings are available for this period.')+' Try a longer range or refresh later. Historical data availability depends on NEA.</p>';tip.textContent='No chart point selected.';return}const W=680,H=190,P=38;let min=Math.min(...points.map(x=>x.v)),max=Math.max(...points.map(x=>x.v));if(min===max){min-=1;max+=1}const start=points[0].t,end=points[points.length-1].t;const x=t=>P+(t-start)/Math.max(1,end-start)*(W-P*2),y=v=>H-P-(v-min)/(max-min)*(H-P*2);const segments=[];for(let i=1;i<points.length;i++){const prev=points[i-1],cur=points[i];segments.push('<line x1="'+x(prev.t).toFixed(1)+'" y1="'+y(prev.v).toFixed(1)+'" x2="'+x(cur.t).toFixed(1)+'" y2="'+y(cur.v).toFixed(1)+'" stroke="'+chartColor(k,cur.v)+'" stroke-width="3" stroke-linecap="round"/>')}const circles=points.map((p,i)=>'<circle class="chartdot" cx="'+x(p.t).toFixed(1)+'" cy="'+y(p.v).toFixed(1)+'" r="4" fill="'+chartColor(k,p.v)+'" opacity=".85"/>').join('');host.innerHTML='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+(k==='psi'?'PSI':'PM2.5')+' trend for '+names[region]+'"><text x="3" y="18" fill="#a8bfd4" font-size="13">'+max.toFixed(0)+'</text><text x="3" y="'+(H-20)+'" fill="#a8bfd4" font-size="13">'+min.toFixed(0)+'</text>'+segments.join('')+circles+'<line id="'+k+'Marker" x1="0" y1="15" x2="0" y2="'+(H-P)+'" stroke="#eaf2ff" stroke-dasharray="4 4" visibility="hidden"/></svg><p class="trendnote">'+points.length+' actual readings · '+new Date(start).toLocaleString('en-SG',{timeZone:'Asia/Singapore'})+' to '+new Date(end).toLocaleString('en-SG',{timeZone:'Asia/Singapore'})+'</p>';tip.textContent='Tap or drag on the chart to inspect a reading.';const svg=host.querySelector('svg');function inspect(e){const rect=svg.getBoundingClientRect();const px=(e.clientX-rect.left)/rect.width*W;let closest=points[0];for(const p of points)if(Math.abs(x(p.t)-px)<Math.abs(x(closest.t)-px))closest=p;tip.textContent=names[region]+' · '+closest.v+(k==='pm'?' µg/m³':' PSI')+' · '+new Date(closest.t).toLocaleString('en-SG',{timeZone:'Asia/Singapore',dateStyle:'medium',timeStyle:'short'});const marker=$(k+'Marker');marker.setAttribute('x1',x(closest.t));marker.setAttribute('x2',x(closest.t));marker.setAttribute('visibility','visible')}svg.addEventListener('pointerdown',e=>{svg.setPointerCapture(e.pointerId);inspect(e)});svg.addEventListener('pointermove',e=>{if(e.buttons)inspect(e)})}for(const id of ['psiRegion','pmRegion']){$(id).innerHTML=regions.map(r=>'<option value="'+r+'"'+(r==='west'?' selected':'')+'>'+names[r]+'</option>').join('');$(id).addEventListener('change',()=>draw(id==='psiRegion'?'psi':'pm'))}document.querySelectorAll('.chartbox').forEach((box,i)=>{const k=i===0?'psi':'pm';box.querySelectorAll('.rangebtn').forEach(btn=>btn.addEventListener('click',()=>{ranges[k]=Number(btn.dataset.range);box.querySelectorAll('.rangebtn').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));draw(k)}))});async function historicalPage(path,date,token){const q=new URLSearchParams({date});if(token)q.set('paginationToken',token);const res=await fetch(base+path+'?'+q.toString(),{headers:{accept:'application/json'}});if(!res.ok)throw Error('Historical API HTTP '+res.status);const d=await res.json();if(d.code!==0&&d.code!==1)throw Error(d.errorMsg||'Historical API error');return d.data||{}}async function backfill(path,k,key){const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Singapore',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).filter(p=>p.type!=='literal').map(p=>[p.type,Number(p.value)]));const {year:yr,month:mo,day:dy}=parts;const dates=Array.from({length:8},(_,days)=>{const d=new Date(Date.UTC(yr,mo-1,dy-days));return d.toISOString().slice(0,10)});let count=0;for(const date of dates){let token=null;const seen=new Set();for(let page=0;page<5;page++){try{const data=await historicalPage(path,date,token);for(const item of data.items||[]){record(k,item,key);count++}token=data.paginationToken;if(!token||seen.has(token))break;seen.add(token)}catch(e){break}}}draw(k);return count}let backfillBusy=false;async function loadHistory(){if(backfillBusy)return;backfillBusy=true;try{await Promise.allSettled([backfill('psi','psi','psi_twenty_four_hourly'),backfill('pm25','pm','pm25_one_hourly')])}finally{backfillBusy=false}}async function get(path){const headers={accept:'application/json'};let res=await fetch(base+path,{headers,cache:'no-store',signal:AbortSignal.timeout(12000)});if(!res.ok)throw Error('HTTP '+res.status);let d=await res.json();if(d.code!==0&&d.code!==1)throw Error(d.errorMsg||'API error');const readingKey=path==='psi'?'psi_twenty_four_hourly':'pm25_one_hourly';let item=latest(d,readingKey);if(item)return item;const today=new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Singapore',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());res=await fetch(base+path+'?date='+today,{headers,cache:'no-store',signal:AbortSignal.timeout(12000)});if(!res.ok)throw Error('Date fallback HTTP '+res.status);d=await res.json();if(d.code!==0&&d.code!==1)throw Error(d.errorMsg||'Date fallback API error');const observation=latest(d,readingKey);if(!observation)throw Error('NEA returned no observation for '+path);return observation}async function getWithRetry(path){let lastError;for(let attempt=0;attempt<3;attempt++){try{return await get(path)}catch(err){lastError=err;if(attempt===2)break;const msg=String(err?.message||err);if(/HTTP 4(?!29)\d\d/.test(msg))break;await new Promise(resolve=>setTimeout(resolve,800*Math.pow(2,attempt)+Math.floor(Math.random()*300)))}}throw lastError}
+async function load(){const refreshButton=$('refresh');if(refreshButton.disabled)return;refreshButton.disabled=true;refreshButton.classList.add('refreshing');refreshButton.textContent='↻ Refreshing…';refreshButton.setAttribute('aria-busy','true');$('status').textContent='Retrieving NEA readings…';const [p,m]=await Promise.allSettled([getWithRetry('psi'),getWithRetry('pm25')]);let pi=p.status==='fulfilled'?p.value:null,mi=m.status==='fulfilled'?m.value:null;const psiLive=!!pi,pmLive=!!mi;window.hcccPmFeedState={live:pmLive,timestamp:mi?.timestamp||null,checkedAt:new Date().toISOString(),error:!pmLive?(m.status==='rejected'?String(m.reason?.message||m.reason):'No official PM2.5 response'):null};lastPsiWasLive=psiLive;lastPmWasLive=pmLive;lastPmTimestamp=mi?.timestamp||null;window.hcccPsiAlertState={live:psiLive,values:pi?.readings?.psi_twenty_four_hourly||null,timestamp:pi?.timestamp||null,checkedAt:new Date().toISOString(),error:!psiLive?(p.status==='rejected'?String(p.reason?.message||p.reason):'No official PSI response'):null};document.dispatchEvent(new Event('hccc-psi-updated'));currentPsi=pi?.readings?.psi_twenty_four_hourly||null;currentPm=mi?.readings?.pm25_one_hourly||null;if(!currentPsi){const cached=history.psi.filter(x=>Object.keys(x.values||{}).length).at(-1);if(cached){currentPsi=cached.values;pi={timestamp:new Date(cached.t).toISOString(),readings:{psi_twenty_four_hourly:cached.values},cached:true}}}if(!currentPm){const cached=history.pm.filter(x=>Object.keys(x.values||{}).length).at(-1);if(cached){currentPm=cached.values;mi={timestamp:new Date(cached.t).toISOString(),readings:{pm25_one_hourly:cached.values},cached:true}}}window.hcccPsiAlertState={...window.hcccPsiAlertState,values:currentPsi||null,timestamp:pi?.timestamp||null,cached:!psiLive&&!!currentPsi};window.hcccPmFeedState={...window.hcccPmFeedState,timestamp:mi?.timestamp||null,cached:!pmLive&&!!currentPm,values:currentPm||null};document.dispatchEvent(new Event('hccc-psi-updated'));document.dispatchEvent(new Event('hccc-pm-updated'));focus();cards('psiCards',currentPsi,true);cards('pmCards',currentPm,false);record('psi',pi,'psi_twenty_four_hourly');record('pm',mi,'pm25_one_hourly');draw('psi');draw('pm');const vals=Object.values(currentPsi||{}).filter(Number.isFinite);const highest=vals.length?Math.max(...vals):null;const g=highest===null?null:grade(highest);$('advisory').textContent=highest===null?'PSI unavailable. Consult official NEA advice.':'Highest regional PSI: '+highest+' ('+g[0]+'). '+(highest<=100?'Most people can continue normal activities; monitor official advice.':highest<=200?'Reduce prolonged or strenuous outdoor activity, especially for vulnerable groups.':'Avoid strenuous outdoor activity and follow official NEA health advisories.');$('status').innerHTML=psiLive&&pmLive?'<span class="good">● Live PSI and PM2.5 requests succeeded</span>':(pi||mi)?'<span class="moderate">● '+(psiLive?'Live PSI':'Saved/unavailable PSI')+' · '+(pmLive?'live PM2.5':'saved/unavailable PM2.5')+'</span>':'<span class="error">Live readings unavailable. Retry or consult NEA.</span>';if(p.status==='rejected'||m.status==='rejected'){console.warn('NEA live API request issue',{psi:p.status==='rejected'?String(p.reason):'ok',pm25:m.status==='rejected'?String(m.reason):'ok'})}const age=pi?.timestamp?Date.now()-Date.parse(pi.timestamp):null;if(Number.isFinite(age)&&age>2*3600000){$('status').innerHTML+='<div class="stale">⚠ PSI reading is over 2 hours old. Check the timestamp and official NEA advice.</div>'}const fmt=t=>t?new Date(t).toLocaleString('en-SG',{timeZone:'Asia/Singapore',dateStyle:'medium',timeStyle:'short'}):'unavailable';$('updated').textContent=`PSI timestamp: ${fmt(pi?.timestamp)} · PM2.5 timestamp: ${fmt(mi?.timestamp)}`;const ages=[['PSI',pi?.timestamp],['PM2.5',mi?.timestamp]].map(([name,t])=>{const ms=Date.now()-Date.parse(t);return name+': '+(!t||!Number.isFinite(ms)?'unavailable':ms<0?'timestamp ahead of device clock':ms<60000?'less than 1 minute old':ms<3600000?Math.floor(ms/60000)+' minutes old':Math.floor(ms/3600000)+' hours old')});$('freshness').textContent='Reading age · '+ages.join(' · ');const freshnessBanner=$('freshnessBanner');if(freshnessBanner){const stampList=[['PSI',pi],['PM2.5',mi]];const problems=stampList.flatMap(([label,item])=>{const ms=Date.now()-Date.parse(item?.timestamp);if(!item?.timestamp||!Number.isFinite(ms))return [label+' unavailable'];if(item.cached)return [label+' saved (not live)'];if(ms>2*3600000)return [label+' over 2 hours old'];if(ms< -10*60000)return [label+' timestamp ahead of device'];return []});freshnessBanner.className='freshness-banner '+(problems.length?'freshness-warn':'freshness-ok');freshnessBanner.textContent=problems.length?'⚠ '+problems.join(' · ')+'. Verify with official NEA updates.':'✓ Latest available readings are within 2 hours of their timestamps.';}
+$('mapUpdated').textContent='PSI updated: '+fmt(pi?.timestamp)+(pi?.cached?' · saved reading':'');$('mapFeedStatus').textContent=pi?(pi.cached?'● Saved PSI · not live':'● Live NEA PSI response'):'● PSI unavailable';const feedLabel=$('mapFeedStatus');feedLabel.classList.toggle('is-saved',!!pi?.cached);feedLabel.classList.toggle('is-unavailable',!pi);const checked=$('v28-check');if(checked){const now=new Date();const stamp=now.toLocaleString('en-SG',{timeZone:'Asia/Singapore',hour:'2-digit',minute:'2-digit',hour12:true});const liveOk=psiLive&&pmLive;const anyLive=psiLive||pmLive;const timestamps=[pi?.timestamp,mi?.timestamp].filter(Boolean).map(x=>Date.parse(x)).filter(Number.isFinite);const oldest=timestamps.length?Math.min(...timestamps):null;const stale=oldest!==null&&Date.now()-oldest>2*3600000;checked.className=!anyLive?'fail':!liveOk||stale?'warn':'';checked.textContent='Last checked: '+stamp+' SGT · '+(!anyLive?'Live requests unavailable':!liveOk?'Partial live update':stale?'Live requests succeeded; source readings may be stale':'Live requests succeeded')+'.';} const state=$('v27-status');if(state){const latestTimes=[pi?.timestamp,mi?.timestamp].filter(Boolean).map(x=>Date.parse(x)).filter(Number.isFinite);const newest=latestTimes.length?Math.max(...latestTimes):null;const elapsed=newest===null?null:Date.now()-newest;state.className=(!psiLive&&!pmLive)?'error':elapsed!==null&&elapsed>2*3600000?'warning':'';state.textContent=(!psiLive&&!pmLive?'Live connection unavailable; showing saved readings where available. ':elapsed!==null&&elapsed>2*3600000?'Warning: latest available readings are over two hours old. ':'')+'Automatic refresh every 15 minutes while this page is open.'} updateActivityPlanner();refreshButton.disabled=false;refreshButton.classList.remove('refreshing');refreshButton.removeAttribute('aria-busy');refreshButton.textContent=(psiLive||pmLive)?'✓ Data checked · Retry live data':'↻ Retry live data';setTimeout(()=>{if(!refreshButton.disabled)refreshButton.textContent='↻ Retry live data'},3500)} $('refresh').addEventListener('click',load);load();loadHistory();setInterval(()=>{if(!document.hidden)load()},15*60*1000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
+
+
+function updateActivityPlanner(){
+ const when=document.getElementById('activityWhen').value,group=document.getElementById('activityGroup').value,region=document.getElementById('focusRegion')?.value||'central';
+ const v=when==='now'?currentPm?.[region]:null;
+ const groupNames={healthy:'Generally healthy adults',vulnerable:'Children, older adults or pregnant people',medical:'People with heart or lung conditions'};
+ const audience=groupNames[group]||groupNames.healthy;
+ const prefix='<div style="font-size:13px;color:#b8d8e8;margin-bottom:10px"><strong>Planning:</strong> '+(when==='now'?'Now / next hour':'Tomorrow / next day')+' · <strong>Participants:</strong> '+audience+' · <strong>Region:</strong> '+names[region]+'</div>';
+ let message='',heading='';
+ if(when==='tomorrow'){
+  heading='Next-day planning: official PSI forecast required';
+  const actions={healthy:'If the official forecast reaches Unhealthy (101–200), reduce prolonged or strenuous outdoor activity.',vulnerable:'If the official forecast reaches Unhealthy (101–200), minimise prolonged or strenuous outdoor activity.',medical:'If the official forecast reaches Unhealthy (101–200), avoid prolonged or strenuous outdoor activity and follow medical advice.'};
+  message='No verified next-day PSI forecast is connected to this dashboard. '+actions[group]+' Check the latest NEA forecast before confirming plans; current PM2.5 readings cannot predict tomorrow’s conditions.';
+ }else if(!Number.isFinite(v)){
+  heading='Current PM2.5 unavailable';
+  message='No usable regional 1-hour PM2.5 reading is available for '+names[region]+'. Check official NEA readings before going outdoors. Advice for '+audience.toLowerCase()+' cannot be assessed from missing data.';
+ }else{
+  const band=v<=55?0:v<=150?1:v<=250?2:3;
+  const verified=lastPmWasLive&&lastPmTimestamp&&Date.now()-Date.parse(lastPmTimestamp)<2*3600000;
+  heading=(verified?'Latest verified ':'Last available ')+names[region]+' PM2.5: '+v+' µg/m³ · '+['Normal','Elevated','High','Very high'][band];
+  const guidance={
+   healthy:['Normal outdoor activities can continue.','Reduce strenuous outdoor activity for the next hour.','Avoid strenuous outdoor activity for the next hour.','Minimise all outdoor activity for the next hour.'],
+   vulnerable:['Normal outdoor activities can continue. This is the same advice as for healthy adults at this low PM2.5 level; reassess if conditions change.','Avoid strenuous outdoor activity for the next hour.','Avoid all outdoor activity for the next hour.','Avoid all outdoor activity for the next hour.'],
+   medical:['Normal outdoor activities can continue if you feel well; follow your personal medical advice. At this low PM2.5 level, the general recommendation is similar.','Avoid strenuous outdoor activity for the next hour; follow medical advice.','Avoid all outdoor activity for the next hour; follow medical advice.','Avoid all outdoor activity for the next hour; follow medical advice.']
+  };
+  message=verified?guidance[group][band]+' This is guidance based on a recently retrieved reading, not a prediction. Recheck before starting.':'Saved or outdated reading only ('+(lastPmTimestamp?new Date(lastPmTimestamp).toLocaleString('en-SG',{timeZone:'Asia/Singapore'}):'timestamp unavailable')+'). Do not use this value for current outdoor activity decisions; check official NEA readings before going out.';
+ }
+ const result=document.getElementById('activityResult');
+ result.innerHTML=prefix+'<strong>'+heading+'</strong><p>'+message+'</p>';
+ result.setAttribute('role','status');
+}
+document.getElementById('activityWhen').addEventListener('change',updateActivityPlanner);document.getElementById('activityGroup').addEventListener('change',updateActivityPlanner);document.getElementById('focusRegion').addEventListener('change',updateActivityPlanner);setInterval(updateActivityPlanner,60000);
+
+function isDatedPsiForecastForTomorrow(){
+ const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Singapore',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).filter(p=>p.type!=='literal').map(p=>[p.type,p.value]));
+ const tomorrow=new Date(Date.UTC(Number(parts.year),Number(parts.month)-1,Number(parts.day)+1));
+ return tomorrow.toISOString().slice(0,10)==='2026-10-24';
+}
+function isDatedPsiForecastCurrent(){
+ const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Singapore',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).filter(p=>p.type!=='literal').map(p=>[p.type,p.value]));
+ return parts.year+'-'+parts.month+'-'+parts.day==='2026-10-24';
+}
+function showDatedPsiForecast(){
+ const el=document.getElementById('datedPsiForecast');if(!el)return;
+ // Dated official forecast from the NEA page provided by the user.
+ // This is a historical snapshot, never a continuously updated API value.
+ const forecastDate='2026-10-24',min=90,max=140;
+ const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Singapore',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).filter(p=>p.type!=='literal').map(p=>[p.type,p.value]));
+ const today=parts.year+'-'+parts.month+'-'+parts.day;
+ if(today===forecastDate){
+  el.textContent='NEA published PSI forecast for 24 Oct 2026: '+min+'–'+max+' (Moderate to Unhealthy). Dated published forecast, not a live API reading. Confirm updates on haze.gov.sg.';
+ }else{
+  el.textContent='No verified current next-day PSI forecast is connected. Check haze.gov.sg for the latest dated official forecast. Historical forecasts must not be used for current planning.';
+ }
+}
+function refreshDatedPsiForecastDisplay(){
+ showDatedPsiForecast();
+ const active=isDatedPsiForecastCurrent();
+ const value=document.getElementById('datedForecastGaugeValue'),caption=document.getElementById('datedForecastGaugeCaption');
+ if(value)value.textContent=active?'90–140':'Not available';
+ if(caption)caption.textContent=active?'NEA · 24 Oct 2026':'Check NEA for official range';
+ const note=document.getElementById('forecastAvailability');
+ if(note)note.textContent=active?'Today’s published NEA PSI forecast (24 Oct 2026): 90–140 (Moderate to Unhealthy). Not valid for tomorrow (25 Oct). Dated forecast, not a live reading; check NEA for updates.':'No verified PSI forecast for today or tomorrow is connected. The 24 Oct 2026 forecast is historical; check NEA for the latest published range and date.';
+ updateActivityPlanner();
+}
+refreshDatedPsiForecastDisplay();
+// Keep the displayed forecast date accurate if the page remains open across midnight in Singapore.
+setInterval(refreshDatedPsiForecastDisplay,60*1000);
+
+let lastVerifiedWeather=null;
+async function loadWeatherOutlook(){
+ const el=document.getElementById('weatherOutlook'),retry=document.getElementById('retryWeatherOutlook'),status=document.getElementById('weatherLastSuccess');
+ if(!el)return;
+ if(retry)retry.disabled=true;
+ try{
+  const res=await fetch('https://api-open.data.gov.sg/v2/real-time/api/twenty-four-hr-forecast',{cache:'no-store',signal:AbortSignal.timeout(12000)});
+  if(!res.ok)throw Error('Weather feed HTTP '+res.status);
+  const json=await res.json(),data=json.data||{};
+  const records=Array.isArray(data.records)?data.records:Array.isArray(data.items)?data.items:[];
+  const item=records[0]||data,general=item.general||{};
+  const rawForecast=general.forecast||item.forecast||data.general?.forecast;
+  const forecast=typeof rawForecast==='string'?rawForecast:(rawForecast&&typeof rawForecast.text==='string'?rawForecast.text:'');
+  const valid=general.validPeriod||item.validPeriod||item.valid_period||data.validPeriod||{};
+  const stamp=valid.start||item.updatedTimestamp||item.updateTimestamp||item.timestamp||'';
+  if(!forecast.trim())throw Error('No verified weather forecast text');
+  // The forecast's valid-from time is source metadata, not the time of this fetch.
+  // Reject a forecast that started over 24 hours ago instead of labelling it current.
+  const issuedMs=stamp?Date.parse(stamp):NaN;
+  if(Number.isFinite(issuedMs)&&Date.now()-issuedMs>24*60*60*1000)throw Error('Weather forecast validity has expired');
+  lastVerifiedWeather={forecast:forecast.trim(),stamp,checked:new Date()};
+  el.textContent='Official NEA 24-hour weather outlook: '+lastVerifiedWeather.forecast+(stamp?' · Valid from: '+stamp:'')+'. This is not a PSI forecast.';
+  if(status)status.textContent='Last successful retrieval: '+new Intl.DateTimeFormat('en-SG',{timeZone:'Asia/Singapore',dateStyle:'medium',timeStyle:'short'}).format(lastVerifiedWeather.checked)+' SGT.';
+ }catch(e){
+  if(lastVerifiedWeather){
+   el.textContent='Weather service temporarily unavailable. Last successfully retrieved outlook (may be outdated): '+lastVerifiedWeather.forecast+(lastVerifiedWeather.stamp?' · Valid from: '+lastVerifiedWeather.stamp:'')+'. This is not a PSI forecast.';
+   if(status)status.textContent='Last successful retrieval: '+new Intl.DateTimeFormat('en-SG',{timeZone:'Asia/Singapore',dateStyle:'medium',timeStyle:'short'}).format(lastVerifiedWeather.checked)+' SGT. Weather service currently unavailable; showing potentially outdated data. Check NEA for updates.';
+  }else{
+   el.textContent='Official 24-hour weather outlook could not be verified. Check NEA directly for current weather. Next-day PSI forecasts are published separately on haze.gov.sg during haze periods.';
+   if(status)status.textContent='No successful, current weather update this session. Use the official NEA weather source.';
+  }
+ }finally{if(retry)retry.disabled=false;}
+}
+document.getElementById('retryWeatherOutlook')?.addEventListener('click',loadWeatherOutlook);
+loadWeatherOutlook();setInterval(loadWeatherOutlook,30*60*1000);
+</script><script>
+(function(){
+ const el=document.getElementById('hccc-geo-map');
+ if(!el)return;
+ // Fixed Singapore bounding box, matching the markers' projected coordinates.
+ // Render tiles directly to avoid the third-party embedded site's donation UI.
+ const bbox={west:103.60,east:104.05,south:1.225,north:1.475};
+ const pins={north:[103.827,1.414],west:[103.705,1.350],central:[103.827,1.352],east:[103.945,1.347],south:[103.827,1.279]};
+ const map=el.closest('.v47-map');
+ const overlay=document.createElement('div');
+ overlay.className='hccc-map-tiles';
+ overlay.setAttribute('aria-hidden','true');
+ el.replaceChildren(overlay);
+ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+ const mercY=lat=>(1-Math.log(Math.tan(lat*Math.PI/180)+1/Math.cos(lat*Math.PI/180))/Math.PI)/2;
+ function draw(){
+  const width=el.clientWidth,height=el.clientHeight;
+  if(!width||!height)return;
+  const zoom=10,tile=256,n=Math.pow(2,zoom);
+  const x=lon=>(lon+180)/360*n*tile;
+  const y=lat=>mercY(lat)*n*tile;
+  const left=x(bbox.west),right=x(bbox.east),top=y(bbox.north),bottom=y(bbox.south);
+  const scale=Math.min(width/(right-left),height/(bottom-top));
+  const cx=(left+right)/2,cy=(top+bottom)/2;
+  overlay.replaceChildren();
+  const xmin=Math.floor((cx-width/(2*scale))/tile),xmax=Math.ceil((cx+width/(2*scale))/tile);
+  const ymin=Math.floor((cy-height/(2*scale))/tile),ymax=Math.ceil((cy+height/(2*scale))/tile);
+  for(let tx=xmin;tx<=xmax;tx++)for(let ty=ymin;ty<=ymax;ty++){
+   if(tx<0||tx>=n||ty<0||ty>=n)continue;
+   const img=document.createElement('img');
+   img.alt='';img.loading='lazy';img.decoding='async';
+   img.src='https://tile.openstreetmap.org/'+zoom+'/'+tx+'/'+ty+'.png';
+   img.style.cssText='position:absolute;max-width:none;width:'+(tile*scale)+'px;height:'+(tile*scale)+'px;left:'+(width/2+(tx*tile-cx)*scale)+'px;top:'+(height/2+(ty*tile-cy)*scale)+'px';
+   overlay.appendChild(img);
+  }
+  for(const [region,[lon,lat]] of Object.entries(pins)){
+   const button=map.querySelector('.v47-pin[data-region="'+region+'"]');
+   if(!button)continue;
+   button.style.left=clamp(100*(width/2+(x(lon)-cx)*scale)/width,9,91)+'%';
+   button.style.top=clamp(100*(height/2+(y(lat)-cy)*scale)/height,12,88)+'%';
+  }
+ }
+ const style=document.createElement('style');
+ style.textContent='.hccc-map-tiles{position:absolute;inset:0;overflow:hidden;pointer-events:none}.hccc-map-tiles img{border:0;pointer-events:none}.v47-map{isolation:isolate}.v47-pins{z-index:2}.hccc-map-attribution{position:absolute;left:4px;bottom:4px;z-index:3;background:#fffE;color:#173044;font-size:11px;line-height:1.4;padding:3px 5px;border-radius:4px}.hccc-map-attribution a{color:#145879;text-decoration:underline}';
+ document.head.appendChild(style);
+ const attribution=document.createElement('div');
+ attribution.className='hccc-map-attribution';
+ attribution.innerHTML='© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>';
+ map.appendChild(attribution);
+ draw();
+ if(typeof ResizeObserver!=='undefined')new ResizeObserver(draw).observe(el);
+ else window.addEventListener('resize',draw);
+})();
+</script><script>
+(function(){
+ const toggle=document.getElementById('hazeAlertEnabled'),threshold=document.getElementById('hazeAlertThreshold'),status=document.getElementById('hazeAlertStatus');
+ const key='hccc-haze-alert-config';function showAlert(message,level){status.textContent=message;status.style.color=({warning:'#facc15',severe:'#fb923c',critical:'#fb7185',neutral:'#a9bbca',safe:'#86efac'})[level]||'#a9bbca';}
+ try{const saved=JSON.parse(localStorage.getItem(key)||'{}');toggle.checked=!!saved.enabled;if([100,200,300].includes(Number(saved.threshold)))threshold.value=String(saved.threshold)}catch(e){}
+ let previousAbove=false;
+ let lastReadingSignature='';
+ function check(){const state=window.hcccPsiAlertState||{};const checked=document.getElementById('hazePsiCheckedAt');if(checked){const fmt=t=>t?new Date(t).toLocaleString('en-SG',{timeZone:'Asia/Singapore',day:'numeric',month:'short',hour:'numeric',minute:'2-digit',hour12:true})+' SGT':'unavailable';checked.textContent='Last live check: '+fmt(state.checkedAt)+(state.live?' · NEA response':' · no live PSI')+(state.timestamp?' · Reading time: '+fmt(state.timestamp):'')+(state.error?' · '+state.error:'')}const enabled=toggle.checked,limit=Number(threshold.value);try{localStorage.setItem(key,JSON.stringify({enabled,threshold:limit}))}catch(e){}
+ if(!enabled){showAlert('Alerts are off.','neutral');previousAbove=false;return}
+ const values=state.live?state.values:null;
+ if(!values){const saved=typeof currentPsi!=='undefined'?currentPsi:null;const regions=['north','south','east','west','central'];const found=saved?regions.filter(region=>Number.isFinite(saved[region])&&saved[region]>limit):[];showAlert(saved?(found.length?'Saved PSI reading (not live): '+found.map(region=>region[0].toUpperCase()+region.slice(1)+' '+saved[region]).join(', ')+' exceeded PSI '+limit+'. No live alert triggered; check NEA for current readings.':'Saved PSI reading (not live): no region exceeded PSI '+limit+' when last recorded. No live alert triggered; check NEA for current readings.'):'Live PSI unavailable. Waiting for an official reading. No live alert triggered.','neutral');previousAbove=false;lastReadingSignature='';return}
+ const matches=['north','south','east','west','central'].filter(region=>Number.isFinite(values[region])&&values[region]>limit);
+ const signature=['north','south','east','west','central'].map(region=>values[region]).join('|')+'@'+limit;
+ if(signature!==lastReadingSignature){previousAbove=false;lastReadingSignature=signature}
+ if(matches.length){showAlert('Live alert active — PSI threshold exceeded: '+matches.map(region=>region[0].toUpperCase()+region.slice(1)+' '+values[region]).join(', ')+'.',limit===300?'critical':limit===200?'severe':'warning');if(!previousAbove&&'vibrate' in navigator)navigator.vibrate(180);previousAbove=true}
+ else{showAlert('No region currently exceeds PSI '+limit+'.','safe');previousAbove=false}
+ }
+ toggle.addEventListener('change',check);threshold.addEventListener('change',()=>{previousAbove=false;check()});document.addEventListener('hccc-psi-updated',check);document.getElementById('retryHazePsi')?.addEventListener('click',()=>document.getElementById('refresh')?.click());
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)check()});
+ setInterval(()=>{if(!document.hidden)check()},30000);check();
+})();
+</script>
+<script>
+/* Display existing regional readings without extra API requests. */
+(function(){
+ const byId=id=>document.getElementById(id);
+ const psiBands=v=>v<=50?['Good','good']:v<=100?['Moderate','good']:v<=200?['Unhealthy','unhealthy']:v<=300?['Very unhealthy','very']:['Hazardous','hazard'];
+ const pmBands=v=>v<=55?['Normal','good']:v<=150?['Elevated','unhealthy']:v<=250?['High','very']:['Very high','hazard'];
+ function update(){
+  const region=byId('focusRegion');if(!region)return;
+  const name=region.options[region.selectedIndex]?.textContent||'Selected region';
+  document.querySelectorAll('.quick-region').forEach(el=>el.textContent=name);
+  const liveStatus=byId('status')?.textContent||'';
+  for(const item of [{type:'Psi',focus:'focusPsi',tile:'quickPsiTile',bands:psiBands,live:/Live PSI(?: and PM2\.5 requests succeeded|\b)/i.test(liveStatus)},{type:'Pm',focus:'focusPm',tile:'quickPmTile',bands:pmBands,live:/Live PSI and PM2\.5 requests succeeded|live PM2\.5/i.test(liveStatus)}]){
+   const raw=byId(item.focus)?.textContent?.trim()||'—';const valid=/^\d+(?:\.\d+)?$/.test(raw);const band=valid?item.bands(Number(raw)):['Unavailable','unknown'];
+   byId('quick'+item.type+'Value').textContent=valid?raw:'—';byId('quick'+item.type+'Band').textContent=band[0];byId(item.tile).dataset.band=band[1];
+   byId('quick'+item.type+'Source').textContent=(item.type==='Pm'?'µg/m³ · ':'')+(valid?(item.live?'Live response':'Saved / not confirmed live'):'No reading available');
+  }
+ }
+ const watch=['focusPsi','focusPm','status'];const observer=new MutationObserver(update);for(const id of watch){const el=byId(id);if(el)observer.observe(el,{childList:true,subtree:true,characterData:true})}byId('focusRegion')?.addEventListener('change',update);update();
+})();
+</script>
+
+<script>
+/* On-demand sharing: no background permissions or third-party services. */
+(function(){
+ const button=document.getElementById('shareSnapshot');if(!button)return;
+ button.addEventListener('click',async()=>{
+  const region=document.getElementById('focusRegion');const name=region?.options[region.selectedIndex]?.textContent||'Selected region';
+  const value=id=>document.getElementById(id)?.textContent?.trim()||'Unavailable';
+  const status=document.getElementById('status')?.textContent||'';
+  const live=/Live PSI and PM2\.5 requests succeeded/i.test(status);
+  const text=['SG Haze Monitor — '+name,'24-hour PSI: '+value('focusPsi')+' ('+value('focusGrade')+')','1-hour PM2.5: '+value('focusPm')+' µg/m³',document.getElementById('updated')?.textContent||'Reading time unavailable',live?'Live API requests succeeded at last check.':'Some readings may be saved or unavailable; verify freshness.','Source: NEA via data.gov.sg','https://strawberries2026.github.io/sg-haze-monitor/'].join('\n');
+  try{if(navigator.share){await navigator.share({title:'SG Haze Monitor',text});return}if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(text);button.textContent='✓ Summary copied';setTimeout(()=>button.textContent='↗ Share latest regional readings',2500);return}window.prompt('Copy haze summary:',text)}catch(e){if(e.name!=='AbortError')window.prompt('Copy haze summary:',text)}
+ });
+})();
+</script>
+
+<script>
+/* Highest 24-hour PSI uses the existing official regional values; no extra API calls. */
+(function(){
+ const el=id=>document.getElementById(id);
+ const regions=['north','south','east','west','central'];
+ const names={north:'North',south:'South',east:'East',west:'West',central:'Central'};
+ const classify=v=>v<=50?'Good':v<=100?'Moderate':v<=200?'Unhealthy':v<=300?'Very unhealthy':'Hazardous';
+ let snapshot=null;
+ function update(){
+  const data=window.hcccPsiAlertState;
+  const values=data?.values;
+  const valid=regions.filter(r=>Number.isFinite(values?.[r]));
+  const text=el('highestPsiReading'),meta=el('highestPsiMeta'),button=el('shareHighestPsi');
+  if(!valid.length){snapshot=null;text.textContent='Regional PSI readings unavailable';meta.textContent='No verified regional values available for comparison.';button.disabled=true;return}
+  const highest=Math.max(...valid.map(r=>values[r]));const winners=valid.filter(r=>values[r]===highest).map(r=>names[r]);
+  const stamp=data.timestamp?new Date(data.timestamp):null;const validStamp=stamp&&Number.isFinite(stamp.getTime());
+  const formatted=validStamp?stamp.toLocaleString('en-SG',{timeZone:'Asia/Singapore',dateStyle:'medium',timeStyle:'short'}):'Timestamp unavailable';
+  const age=validStamp?Date.now()-stamp.getTime():NaN;
+  const live=Boolean(data.live);const stale=!Number.isFinite(age)||age>2*3600000||age< -10*60000;
+  const status=live?(stale?'Live response · timestamp requires verification':'Live NEA response'):'Saved / not confirmed live';
+  text.textContent=highest+' ('+classify(highest)+') — '+winners.join(' & ');
+  meta.textContent=status+' · '+formatted+(valid.length<5?' · '+valid.length+'/5 regions available':'');
+  snapshot={highest,winners,classification:classify(highest),formatted,status,coverage:valid.length};button.disabled=false;
+ }
+ document.addEventListener('hccc-psi-updated',update);
+ el('shareHighestPsi')?.addEventListener('click',async()=>{
+  if(!snapshot)return;
+  const s=snapshot;
+  const message=['SG Haze Monitor — Highest 24-hour PSI','Region'+(s.winners.length>1?'s':'')+': '+s.winners.join(', '),'24-hour PSI: '+s.highest+' ('+s.classification+')','Reading time: '+s.formatted,'Status: '+s.status,'Regional coverage: '+s.coverage+'/5','Source: NEA via data.gov.sg','https://strawberries2026.github.io/sg-haze-monitor/'].join('\n');
+  const button=el('shareHighestPsi');
+  try{if(navigator.share){await navigator.share({title:'Highest 24-hour PSI — SG Haze Monitor',text:message});return}if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(message);button.textContent='✓ Highest PSI copied';setTimeout(()=>button.textContent='↗ Share highest PSI',2400);return}window.prompt('Copy highest PSI summary:',message)}catch(e){if(e.name!=='AbortError')window.prompt('Copy highest PSI summary:',message)}
+ });
+ update();
+})();
+</script>
+
+<script>
+/* Regional ranking and map emphasis use the same five NEA values as the highest PSI card. */
+(function(){
+ const regions=['north','south','east','west','central'];
+ const names={north:'North',south:'South',east:'East',west:'West',central:'Central'};
+ const ranking=document.getElementById('psiRanking');
+ const highestButton=document.getElementById('shareHighestPsi');
+ const regionalButton=document.getElementById('shareSnapshot');
+ if(highestButton&&regionalButton){
+  const menu=document.createElement('details');menu.className='share-menu';
+  const summary=document.createElement('summary');summary.textContent='↗ Share haze readings';
+  const actions=document.createElement('div');actions.className='share-menu-actions';
+  highestButton.textContent='Share highest PSI';regionalButton.textContent='Share selected region';
+  actions.append(highestButton,regionalButton);menu.append(summary,actions);
+  document.querySelector('.highest-psi')?.append(menu);
+ }
+ function update(){
+  const data=window.hcccPsiAlertState;
+  const values=data?.values||{};
+  const ordered=regions.filter(r=>Number.isFinite(values[r])).sort((a,b)=>values[b]-values[a]||regions.indexOf(a)-regions.indexOf(b));
+  const max=ordered.length?values[ordered[0]]:null;
+  document.querySelectorAll('.v47-pins [data-region]').forEach(pin=>{
+   const top=max!==null&&values[pin.dataset.region]===max;
+   pin.classList.toggle('psi-highest-pin',top);
+   if(top)pin.setAttribute('title','Highest 24-hour PSI: '+max);else pin.removeAttribute('title');
+  });
+  if(!ranking)return;
+  ranking.replaceChildren();
+  if(!ordered.length){ranking.textContent='Regional ranking unavailable until NEA PSI data loads.';return}
+  const title=document.createElement('div');title.className='psi-ranking-title';title.textContent='24-hour PSI regional ranking';ranking.append(title);
+  const list=document.createElement('ol');
+  for(const r of ordered){const li=document.createElement('li');li.value=ordered.filter(x=>values[x]>values[r]).length+1;if(values[r]===max)li.className='psi-ranking-top';const name=document.createElement('span');name.textContent=names[r]+(values[r]===max?' ★':'');const value=document.createElement('strong');value.textContent=String(values[r]);li.append(name,value);list.append(li)}
+  ranking.append(list);
+  if(ordered.length<5){const note=document.createElement('p');note.className='psi-ranking-note';note.textContent='Partial coverage: '+ordered.length+'/5 regions available.';ranking.append(note)}
+  if(!data?.live){const note=document.createElement('p');note.className='psi-ranking-note';note.textContent='Saved or unconfirmed live readings — verify freshness.';ranking.append(note)}
+ }
+ document.addEventListener('hccc-psi-updated',update);const feed=document.getElementById('mapFeedStatus');if(feed)new MutationObserver(update).observe(feed,{childList:true,subtree:true,characterData:true});update();
+})();
+</script>
+
+<script>
+/* Jump to the existing 24-hour PSI map view without changing the default PM2.5 view. */
+(function(){const button=document.getElementById('viewHighestPsiMap');button?.addEventListener('click',()=>{const psiTab=document.getElementById('mapPsiMode');psiTab?.click();const map=document.querySelector('.v47-map');if(map){map.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'})}psiTab?.focus({preventScroll:true})})})();
+</script>
+<style id="region-dual-v1">
+.dual-region-panel{background:#102b3d;border:1px solid #4a7185;border-radius:17px;padding:14px;margin:14px 0}.dual-region-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.dual-region-tile{background:#18364b;color:white;border:2px solid #466a7c;border-radius:13px;padding:12px;text-align:left;cursor:pointer}.dual-region-tile:last-child{grid-column:1/-1}.dual-region-tile.top{border-color:#ffdc6a}.dual-region-tile b{font-size:15px}.dual-region-numbers{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px}.dual-region-numbers span{font-size:10px}.dual-region-numbers strong{display:block;font-size:26px}.dual-region-status{font-size:12px;color:#bcd5e3;margin-top:10px;line-height:1.4}
+</style><script>
+(function(){
+ const map=document.getElementById('map');if(!map)return;
+ const section=document.createElement('section');section.className='dual-region-panel';section.setAttribute('aria-label','Regional PSI and PM2.5');
+ section.innerHTML='<h3>Singapore haze — five regions</h3><p class="muted">1-hour PM2.5 and 24-hour PSI are separate measurements. Tap a region for details.</p><details class="regional-card-details"><summary>Show all five regional reading cards</summary><div class="dual-region-grid"></div></details><div class="dual-region-status" role="status"></div>';
+ const target=map.querySelector('.v47-map')||map.querySelector('.map-v10');if(target)target.before(section);else map.append(section);
+ const regions=['north','west','central','east','south'],grid=section.querySelector('.dual-region-grid'),cards={};
+ for(const r of regions){const b=document.createElement('button');b.type='button';b.className='dual-region-tile';b.innerHTML='<b></b><div class="dual-region-numbers"><span>1-hour PM2.5<strong class="pm">—</strong></span><span>24-hour PSI<strong class="psi">—</strong></span></div>';b.addEventListener('click',()=>{const selector=document.getElementById('focusRegion');if(selector){selector.value=r;selector.dispatchEvent(new Event('change',{bubbles:true}))}document.querySelector('.v47-pin[data-region="'+r+'"]')?.click();document.getElementById('mapPsiMode')?.click()});grid.append(b);cards[r]=b}
+ function render(){const state=window.hcccPsiAlertState||{},psi=state.values||{},pm=(typeof currentPm!=='undefined'&&currentPm)||{};const values=regions.filter(r=>Number.isFinite(psi[r]));const max=values.length?Math.max(...values.map(r=>psi[r])):null;for(const r of regions){const b=cards[r],top=max!==null&&psi[r]===max;b.classList.toggle('top',top);b.querySelector('b').textContent=r[0].toUpperCase()+r.slice(1)+(top?' ★ Highest PSI':'');b.querySelector('.psi').textContent=Number.isFinite(psi[r])?psi[r]:'—';b.querySelector('.pm').textContent=Number.isFinite(pm[r])?pm[r]:'—'}const date=state.timestamp?new Date(state.timestamp):null;const valid=date&&Number.isFinite(date.getTime());const stale=!valid||Date.now()-date.getTime()>7200000||Date.now()-date.getTime() < -600000;section.querySelector('.dual-region-status').textContent=(state.live?'Official NEA PSI response':'PSI not verified live')+' · '+(valid?date.toLocaleString('en-SG',{timeZone:'Asia/Singapore',dateStyle:'medium',timeStyle:'short'})+' SGT':'Reading time unavailable')+(stale?' · Check freshness':'')+' · '+values.length+'/5 PSI regions available. PM2.5 may update separately.'}
+ document.addEventListener('hccc-psi-updated',()=>setTimeout(render,0));render();
+})();
+</script><style id="map-ux-final-v1">
+/* Dim only the background tiles; leave markers and text at full contrast. */
+#hccc-geo-map .hccc-map-tiles img{filter:brightness(.76) saturate(.76)}
+.map-psi-highlight{display:inline-block;background:#263b39;border:1px solid #d8b752;color:#ffe391;border-radius:11px;padding:8px 11px;font-size:13px;font-weight:800;margin:8px 0 10px}
+.map-psi-legend{display:flex;flex-wrap:wrap;gap:7px 12px;margin:10px 0 12px;font-size:11px;color:#d7e8f3}
+.map-psi-legend span{display:inline-flex;align-items:center;gap:5px}
+.map-psi-legend i{width:11px;height:11px;display:inline-block;border-radius:3px}
+.legend-good{background:#25b95c}.legend-unhealthy{background:#ffcc08}.legend-very{background:#ff941b}.legend-hazard{background:#ee1735}
+</style><script>
+(function(){
+ const label=document.getElementById('mapPsiHighlight');if(!label)return;
+ const regions=['north','west','central','east','south'];
+ function update(){const state=window.hcccPsiAlertState||{},values=state.values||{};const valid=regions.filter(r=>Number.isFinite(values[r]));if(!valid.length){label.textContent='★ Highest 24-hour PSI: unavailable';return}const max=Math.max(...valid.map(r=>values[r]));const winners=valid.filter(r=>values[r]===max).map(r=>r[0].toUpperCase()+r.slice(1));const live=state.live===true&&!state.cached;const stamp=state.timestamp?Date.parse(state.timestamp):NaN;const age=Date.now()-stamp;const fresh=Number.isFinite(age)&&age>=-10*60000&&age<=2*3600000;const suffix=live?(fresh?'':' (live response; observation time requires verification)'):' (not confirmed live)';label.textContent='★ Highest 24-hour PSI: '+max+' — '+winners.join(' & ')+suffix}
+ document.addEventListener('hccc-psi-updated',update);const feed=document.getElementById('mapFeedStatus');if(feed)new MutationObserver(update).observe(feed,{childList:true,subtree:true,characterData:true});update();
+})();
+</script><style id="mobile-ux-consolidation-v1">
+.regional-card-details{margin:12px 0}.regional-card-details>summary{cursor:pointer;border:1px solid #52768b;border-radius:12px;padding:11px 13px;font-weight:750;color:#d7eef5}.regional-card-details[open]>summary{margin-bottom:12px}
+.mobile-bottom-nav{display:none}
+@media(max-width:700px){
+ body{padding-bottom:76px}
+ .mobile-bottom-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;bottom:0;left:0;right:0;z-index:1100;background:#102638;border-top:1px solid #52768b;padding:7px 4px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px #0007}
+ .mobile-bottom-nav a{color:#e6f4ff;text-align:center;text-decoration:none;font-size:11px;font-weight:750;min-height:45px;display:flex;flex-direction:column;justify-content:center;gap:3px;border-radius:9px}
+ .mobile-bottom-nav a:focus-visible{outline:2px solid #ffda73}
+ .mobile-bottom-nav a span{font-size:18px}
+ .legacy-section-links{display:none}
+ .summary[aria-label="Regional quick view"]{display:grid;grid-template-columns:1fr 1fr}
+ .summary[aria-label="Regional quick view"] .card{min-width:0}
+ .summary[aria-label="Regional quick view"] .value{font-size:28px}
+ .summary[aria-label="Regional quick view"] select{max-width:100%}
+}
+</style><nav class="mobile-bottom-nav" aria-label="Mobile quick navigation"><a href="#top"><span>⌂</span>Home</a><a href="#map"><span>▣</span>Map</a><a href="#trends"><span>⌁</span>Trends</a><a href="#advisory-panel"><span>♡</span>Advisory</a><a href="#more-links"><span>☷</span>More</a></nav><script>
+(function(){
+ const main=document.querySelector('main');if(main&&!main.id)main.id='top';
+ const advisory=document.querySelector('section.card.advisory');if(advisory)advisory.id='advisory-panel';
+ const legacy=document.querySelector('.legacy-section-links');if(legacy)legacy.id='more-links';
+ const selected=document.querySelector('.summary[aria-label="Regional quick view"]');const guidance=document.querySelector('#guidanceText')?.closest('.map-detail');
+ if(selected&&guidance){const detail=document.createElement('details');detail.className='selected-region-extra';detail.innerHTML='<summary>More selected-region details</summary>';selected.parentNode.insertBefore(detail,selected);detail.append(selected);const label=detail.querySelector('summary');label.style.cssText='padding:12px;border:1px solid #52768b;border-radius:12px;cursor:pointer;font-weight:700';}
+})();
+</script><style id="mobile-nav-fix-v1">
+.mobile-bottom-nav a[aria-current="page"]{background:#276084;color:#fff}
+#map,#trends,#advisory-panel,#more-links{scroll-margin-top:12px;scroll-margin-bottom:110px}
+.mobile-more-panel{display:none}
+@media(max-width:700px){
+ .mobile-more-panel[open]{display:block;position:fixed;bottom:calc(75px + env(safe-area-inset-bottom));left:10px;right:10px;z-index:1099;max-height:65vh;overflow-y:auto;padding:16px;background:#163247;border:1px solid #6b9eb1;border-radius:16px;box-shadow:0 0 0 100vmax #0008}
+ .mobile-more-panel a,.mobile-more-panel button{display:block;width:100%;text-align:left;padding:13px 12px;margin:4px 0;color:#e9f7ff;background:#24445b;border:1px solid #52768b;border-radius:9px;text-decoration:none;font-size:15px}
+}
+@media(max-width:700px){
+ .mobile-bottom-nav{padding:5px 6px calc(5px + env(safe-area-inset-bottom));gap:5px}
+ .mobile-bottom-nav a{min-width:0;min-height:48px;border:1px solid #41677e;border-radius:10px;font-size:12px;line-height:1.2;padding:4px 1px}
+ .mobile-bottom-nav a span{font-size:19px;line-height:1}
+ main{padding-bottom:calc(160px + env(safe-area-inset-bottom))}
+ #top,#map,#trends,#advisory-panel,#more-links,#psi,#pm25,#guide,#masks{scroll-margin-bottom:calc(110px + env(safe-area-inset-bottom))}
+}
+</style><div id="mobile-more-panel" class="mobile-more-panel" role="dialog" aria-modal="false" aria-label="More features" hidden><strong>More features</strong><button type="button" id="mobile-more-close">Close ✕</button><a href="./intelligence.html" style="font-weight:800;border-color:#40c8ac;background:#1c555a">🧭 Haze Intelligence Centre →</a><a href="./satellite.html" style="font-weight:800;border-color:#40c8ac;background:#1c555a">🛰️ Satellite imagery &amp; wind map →</a><a href="#psi">24-hour PSI</a><a href="#pm25">1-hour PM2.5</a><a href="#guide">PSI guide</a><a href="#masks">N95 masks</a><button type="button" id="mobile-more-export">Export readings (CSV)</button></div>
+<script>
+(function(){
+ const nav=document.querySelector('.mobile-bottom-nav'),panel=document.getElementById('mobile-more-panel');if(!nav||!panel)return;
+ const links=[...nav.querySelectorAll('a')],more=links.find(a=>a.getAttribute('href')==='#more-links');
+ function close(){panel.hidden=true;panel.removeAttribute('open');more?.setAttribute('aria-expanded','false')}
+ function mark(link){for(const a of links){if(a===link)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')}}
+ function scrollToId(id){const el=document.getElementById(id);if(!el)return false;const y=el.getBoundingClientRect().top+window.scrollY-14;window.scrollTo({top:Math.max(0,y),behavior:'auto'});return true}
+ for(const link of links){link.addEventListener('click',e=>{const target=link.getAttribute('href')?.slice(1);if(!target)return;e.preventDefault();mark(link);
+ if(target==='more-links'){const opening=panel.hidden;close();if(opening){panel.hidden=false;panel.setAttribute('open','');more.setAttribute('aria-expanded','true')}return}
+ close();if(target==='map'){const regionMap=document.querySelector('.v47-map');if(regionMap){const y=regionMap.getBoundingClientRect().top+window.scrollY-12;window.scrollTo({top:y,behavior:'auto'});history.replaceState(null,'','#map');return}}
+ if(scrollToId(target))history.replaceState(null,'','#'+target);
+ })}
+ panel.querySelectorAll('a').forEach(a=>a.addEventListener('click',e=>{const href=a.getAttribute('href')||'';if(!href.startsWith('#')){close();return}const id=href.slice(1);if(!id)return;e.preventDefault();close();if(id==='psi'||id==='pm25'){document.getElementById(id==='psi'?'mapPsiMode':'mapPmMode')?.click();const map=document.querySelector('.v47-map')||document.getElementById('map');if(map){window.scrollTo({top:Math.max(0,map.getBoundingClientRect().top+window.scrollY-12),behavior:'auto'});history.replaceState(null,'','#map')}return}if(scrollToId(id))history.replaceState(null,'','#'+id)}));
+ document.querySelectorAll('.legacy-section-links [data-map-mode]').forEach(a=>a.addEventListener('click',()=>document.getElementById(a.dataset.mapMode==='psi'?'mapPsiMode':'mapPmMode')?.click()));
+ document.getElementById('mobile-more-close')?.addEventListener('click',close);
+ document.getElementById('mobile-more-export')?.addEventListener('click',()=>{close();document.getElementById('exportCsv')?.click()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+ document.addEventListener('click',e=>{if(!panel.hidden&&!panel.contains(e.target)&&!more?.contains(e.target))close()});
+})();
+</script><script id="map-feed-mode-status-v1">
+/* Show the selected pollutant's own feed state and observation time. */
+(function(){
+ const pm=document.getElementById('mapPmMode'),psi=document.getElementById('mapPsiMode');
+ const status=document.getElementById('mapFeedStatus'),updated=document.getElementById('mapUpdated');
+ if(!pm||!psi||!status||!updated)return;
+ const fmt=timestamp=>{if(!timestamp)return 'unavailable';const d=new Date(timestamp);return Number.isFinite(d.getTime())?d.toLocaleString('en-SG',{timeZone:'Asia/Singapore',day:'2-digit',month:'short',year:'numeric',hour:'numeric',minute:'2-digit'}):'unavailable'};
+ function sync(){
+  const isPm=pm.getAttribute('aria-pressed')==='true';
+  const state=isPm?window.hcccPmFeedState:window.hcccPsiAlertState;
+  const label=isPm?'PM2.5':'PSI';
+  if(!state)return;
+  const live=state.live===true,hasSaved=!live&&Boolean(isPm?window.hcccPmFeedState?.timestamp:window.hcccPsiAlertState?.values);
+  status.textContent=live?'● Live NEA '+label+' response':hasSaved?'● Saved '+label+' · not live':'● '+label+' unavailable';
+  status.classList.toggle('is-saved',hasSaved);
+  status.classList.toggle('is-unavailable',!live&&!hasSaved);
+  updated.textContent=label+' updated: '+fmt(state.timestamp)+(hasSaved?' · saved reading':'');
+ }
+ pm.addEventListener('click',()=>requestAnimationFrame(sync));
+ psi.addEventListener('click',()=>requestAnimationFrame(sync));
+ document.addEventListener('hccc-psi-updated',()=>requestAnimationFrame(sync));
+ document.addEventListener('hccc-pm-updated',()=>requestAnimationFrame(sync));
+ window.addEventListener('load',sync);
+})();
+</script><script id="map-at-a-glance-layout">
+(function(){
+ function arrange(){
+  const section=document.getElementById('map'),panel=section?.querySelector('.hybrid-map');
+  const map=panel?.querySelector('.v47-map'),highlight=panel?.querySelector('#mapPsiHighlight');
+  if(!panel||!map||!highlight)return;
+  const heading=section.querySelector('h2');
+  if(heading)heading.textContent='Singapore air quality at a glance';
+  const subtitle=section.querySelector(':scope > p.muted');
+  if(subtitle)subtitle.hidden=true;
+  panel.insertBefore(highlight,panel.firstElementChild);
+  highlight.after(map);
+  const controls=panel.querySelector('.air-map-toggle');
+  if(controls)map.after(controls);
+  const help=panel.querySelector('#mapModeHelp');
+  if(help)help.hidden=true;
+  const explainer=panel.querySelector('.map-highest-explainer');
+  if(explainer)explainer.hidden=true;
+  const title=panel.querySelector('.hybrid-heading');
+  if(title)title.classList.add('compact-map-secondary');
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',arrange,{once:true});else arrange();
+})();
+</script><style id="map-at-a-glance-css">
+@media(max-width:700px){
+ #map>h2{font-size:clamp(1.3rem,5.4vw,1.8rem);margin:8px 0 12px}
+ #map .hybrid-map{padding:12px!important}
+ #map .map-psi-highlight{margin:2px 0 12px!important;font-size:clamp(.85rem,3.5vw,1rem);max-width:100%;box-sizing:border-box}
+ #map .v47-map{margin:0 0 12px!important}
+ #map .compact-map-secondary{margin-top:12px}
+ #map .map-topline{margin-top:12px}
+ #map .air-map-toggle{margin:0 0 8px}
+}
+</style><style id="mobile-navigation-clearance-v2">
+@media(max-width:700px){
+ html{scroll-padding-bottom:calc(120px + env(safe-area-inset-bottom))}
+ body{padding-bottom:calc(135px + env(safe-area-inset-bottom))!important}
+ main{padding-bottom:calc(145px + env(safe-area-inset-bottom))!important}
+ #top,#map,#trends,#advisory-panel,#more-links{scroll-margin-bottom:calc(130px + env(safe-area-inset-bottom))}
+ .mobile-bottom-nav{min-height:74px}
+}
+</style><style id="mobile-footer-gap-fix">
+/* Avoid stacking body and main bottom padding beneath the fixed navigation. */
+@media(max-width:700px){
+ body{padding-bottom:0!important}
+ main{padding-bottom:calc(94px + env(safe-area-inset-bottom))!important}
+ html{scroll-padding-bottom:calc(95px + env(safe-area-inset-bottom))}
+}
+</style><style id="mobile-footer-readable-v1">
+/* Leave a modest scroll buffer for the last disclaimer line above fixed navigation. */
+@media(max-width:700px){
+ main{padding-bottom:calc(112px + env(safe-area-inset-bottom))!important}
+ main>footer{scroll-margin-bottom:calc(100px + env(safe-area-inset-bottom));padding-bottom:8px}
+}
+</style><style id="smart-summary-phase1-style">
+.smart-summary{margin:12px 0 16px;padding:14px;border:1px solid #52788b;border-radius:17px;background:#102b3e;color:#eaf5ff}
+.smart-summary h3{margin:0 0 10px;font-size:18px}.smart-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.smart-summary-grid article{border:1px solid #426a80;border-radius:12px;padding:10px;background:#18394c;min-width:0}
+.smart-summary-grid small{display:block;color:#bdd5e4;font-size:12px}.smart-summary-grid strong{display:block;font-size:17px;margin-top:5px;overflow-wrap:anywhere}
+.smart-summary-footer{font-size:12px;line-height:1.5;margin-top:10px;color:#c6dce9}.smart-summary-footer a{color:#9ee5e9}
+</style><script id="smart-summary-phase1-script">
+(function(){
+const panel=document.querySelector('.hybrid-map'),map=panel?.querySelector('.v47-map');if(!panel||!map)return;
+const box=document.createElement('section');box.className='smart-summary';box.setAttribute('aria-label','Smart air quality summary');
+box.innerHTML='<h3>Air quality snapshot</h3><div class="smart-summary-grid"><article><small>Highest 24-hour PSI</small><strong id="smart-max-psi">Checking…</strong></article><article><small>Highest 1-hour PM2.5</small><strong id="smart-max-pm">Checking…</strong></article><article><small>PSI conditions</small><strong id="smart-condition">Checking…</strong></article><article><small>Data freshness</small><strong id="smart-freshness">Checking…</strong></article></div><div class="smart-summary-footer"><span id="smart-updated">Awaiting verified readings.</span> · <a href="https://www.haze.gov.sg/" target="_blank" rel="noopener noreferrer">Official NEA haze outlook ↗</a><br>Forecast is available from NEA when published; it is not calculated from current readings.</div>';
+map.before(box);
+const names={north:'North',south:'South',east:'East',west:'West',central:'Central'},regions=Object.keys(names);
+const set=(id,value)=>{const el=document.getElementById(id);if(el&&el.textContent!==value)el.textContent=value};
+function update(){
+const state=window.hcccPsiAlertState||{},psi=state.values||{},pins=[...document.querySelectorAll('.v47-pin')];
+const read=(r,kind)=>{
+ const pin=pins.find(p=>p.dataset.region===r);
+ const col=pin?.querySelector(kind==='pm'?'.pin-dual>span:first-child b':'.pin-dual>span:last-child b');
+ const raw=col?.textContent?.trim();
+ if(raw&&raw!=='—'&&Number.isFinite(Number(raw)))return Number(raw);
+ const card=[...document.querySelectorAll('.dual-region-card,.regional-card')].find(el=>el.dataset.region===r);
+ const fallback=card?.querySelector(kind==='pm'?'.reading-pm b':'.reading-psi b');
+ const value=fallback?.textContent?.trim();
+ return value&&value!=='—'&&Number.isFinite(Number(value))?Number(value):null;
+};
+const best=kind=>{const a=regions.map(r=>({r,v:kind==='psi'&&Number.isFinite(psi[r])?psi[r]:read(r,kind)})).filter(x=>Number.isFinite(x.v));if(!a.length)return null;const m=Math.max(...a.map(x=>x.v));return {v:m,regions:a.filter(x=>x.v===m).map(x=>names[x.r])}};
+const p=best('psi'),m=best('pm');
+set('smart-max-psi',p?p.v+' · '+p.regions.join(', '):'Unavailable');
+set('smart-max-pm',m?m.v+' µg/m³ · '+m.regions.join(', '):'Unavailable');
+set('smart-condition',!p?'Unavailable':p.v<=100?'Good to Moderate':p.v<=200?'Unhealthy':p.v<=300?'Very Unhealthy':'Hazardous');
+const status=document.getElementById('mapFeedStatus')?.textContent||'';
+const timestamp=document.getElementById('mapUpdated')?.textContent||'';
+const saved=/saved|cached|stale/i.test(status+timestamp),unavailable=/unavailable/i.test(status);
+set('smart-freshness',unavailable?'Unavailable':saved?'Saved / not live':/live/i.test(status)?'Live response':(p||m)?'Readings shown; freshness unverified':'Checking');
+set('smart-updated',timestamp||'NEA timestamp unavailable');
+}
+update();setInterval(update,5000);document.addEventListener('hccc-psi-updated',update);document.addEventListener('visibilitychange',()=>{if(!document.hidden)update()});
+})();
+</script><script id="professional-data-health-script">
+(()=>{'use strict';const $=id=>document.getElementById(id),set=(id,s)=>{const el=$(id);if(el)el.textContent=s};let prior='';function update(){const status=$('mapFeedStatus')?.textContent?.trim()||'',observed=$('mapUpdated')?.textContent?.trim()||'';set('health-feed',status||'Unavailable');const issue=window.hcccPsiAlertState?.error;const pmIssue=window.hcccPmFeedState?.error;set('health-error',[issue?'PSI: '+issue:'PSI: no request error',pmIssue?'PM2.5: '+pmIssue:'PM2.5: no request error'].join(' · '));const psi=window.hcccPsiAlertState,pm=window.hcccPmFeedState;const stateLabel=(v)=>!v?'Checking':v.live?'Live':v.cached?'Saved':'Unavailable';const psiLabel=stateLabel(psi),pmLabel=stateLabel(pm);const overall=psiLabel==='Live'&&pmLabel==='Live'?'Both feeds live':psiLabel==='Live'||pmLabel==='Live'?'Partial live data':psiLabel==='Saved'||pmLabel==='Saved'?'Saved data · not live':psiLabel==='Checking'||pmLabel==='Checking'?'Checking feeds':'Feeds unavailable';set('health-summary',overall+' · details');set('health-feed','PSI: '+psiLabel+' · PM2.5: '+pmLabel);const showTime=(v)=>{if(!v?.timestamp)return 'unavailable';const d=new Date(v.timestamp);return Number.isFinite(d.getTime())?d.toLocaleString('en-SG',{timeZone:'Asia/Singapore',day:'2-digit',month:'short',year:'numeric',hour:'numeric',minute:'2-digit'}):'unavailable'};set('health-observed','PSI: '+showTime(psi)+' · PM2.5: '+showTime(pm));const bad=/unavailable|error|failed/i.test(status),cached=/cached|saved|stale|not live/i.test(status+' '+observed),live=/live/i.test(status)&&!cached&&!bad;set('health-confidence',overall);const pair=overall+'|'+observed;if(pair!==prior){prior=pair;if(!/checking|loading/i.test(pair))set('health-checked',new Date().toLocaleTimeString())}}
+update();document.addEventListener('hccc-psi-updated',update);setInterval(update,5000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)update()})})();
+</script><script id="pwa-register-v1">
+if('serviceWorker' in navigator&&location.protocol==='https:'){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(error=>console.warn('Optional offline shell unavailable:',error))})}
+</script></body></html>
